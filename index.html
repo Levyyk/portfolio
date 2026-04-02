@@ -800,14 +800,59 @@
     .reveal.visible { opacity: 1; transform: none; }
 
     /* =============================================
-       RESPONSIVE
+       RESPONSIVE (ВИПРАВЛЕНО ДЛЯ МОБІЛКИ 2х2)
     ============================================= */
     @media (max-width: 900px) {
       .contact-grid { grid-template-columns: 1fr; }
     }
+
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       #hero { padding-top: 90px; }
+      
+      /* Послуги сіткою 2х2 */
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .card {
+        padding: 22px 16px;
+        gap: 10px;
+      }
+      .card-icon {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+      }
+      .card-title {
+        font-size: 0.82rem;
+        letter-spacing: -0.02em;
+      }
+      .card-desc {
+        font-size: 0.74rem;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* Обмежуємо опис 4-ма рядками для рівності */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .card-number {
+        top: 12px;
+        right: 12px;
+        font-size: 0.55rem;
+      }
+      .card-footer {
+        padding-top: 10px;
+      }
+      .card-tag {
+        font-size: 0.58rem;
+        padding: 2px 8px;
+      }
+      .card-arrow {
+        display: none; /* Ховаємо стрілочку на мобілці для чистоти */
+      }
+
       .about-inner { grid-template-columns: 1fr; gap: 48px; }
       .about-stats { position: static; }
       .form-row { grid-template-columns: 1fr; }
@@ -815,6 +860,13 @@
       footer { flex-direction: column; text-align: center; }
       .footer-links { justify-content: center; }
       .hero-scroll { display: none; }
+    }
+
+    /* Для зовсім маленьких екранів */
+    @media (max-width: 380px) {
+      .services-grid { gap: 8px; }
+      .card { padding: 16px 12px; }
+      .card-title { font-size: 0.75rem; }
     }
   </style>
 </head>
@@ -883,7 +935,7 @@
         <span class="card-number">01</span>
         <div class="card-icon">🐍</div>
         <div class="card-title">Python-скрипти</div>
-        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, сповіщення, інтеграції з API. Економить години щодня.</p>
+        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, сповіщення, інтеграції з API.</p>
         <div class="card-footer">
           <span class="card-tag">Автоматизація</span>
           <span class="card-arrow">↗</span>
@@ -894,7 +946,7 @@
         <span class="card-number">02</span>
         <div class="card-icon">📊</div>
         <div class="card-title">Автоматизація Excel</div>
-        <p class="card-desc">Макроси, формули, зведені таблиці. Перетворю ваш Excel-файл на інструмент, який працює сам.</p>
+        <p class="card-desc">Макроси, формули, зведені таблиці. Перетворю ваш Excel на інструмент, що працює сам.</p>
         <div class="card-footer">
           <span class="card-tag">Excel / VBA</span>
           <span class="card-arrow">↗</span>
@@ -905,9 +957,9 @@
         <span class="card-number">03</span>
         <div class="card-icon">🔎</div>
         <div class="card-title">Парсери даних</div>
-        <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти, каталоги. Результат — зручний Excel або Google Sheet.</p>
+        <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти, каталоги. Результат — зручний Excel.</p>
         <div class="card-footer">
-          <span class="card-tag">Web Scraping</span>
+          <span class="card-tag">Scraping</span>
           <span class="card-arrow">↗</span>
         </div>
       </div>
@@ -916,9 +968,9 @@
         <span class="card-number">04</span>
         <div class="card-icon">🤖</div>
         <div class="card-title">Telegram-боти</div>
-        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення для команди. Запускаю швидко і недорого.</p>
+        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Запускаю швидко і недорого.</p>
         <div class="card-footer">
-          <span class="card-tag">Telegram API</span>
+          <span class="card-tag">API / Bots</span>
           <span class="card-arrow">↗</span>
         </div>
       </div>
@@ -1048,11 +1100,11 @@
 
           <div class="form-field">
             <label for="message">Опишіть задачу</label>
-            <textarea id="message" name="message" placeholder="Розкажіть детальніше — що треба зробити, який результат очікуєте..." required></textarea>
+            <textarea id="message" name="message" placeholder="Розкажіть детальніше..." required></textarea>
           </div>
 
           <div class="form-submit-row">
-            <span class="form-note">🔒 Перша консультація — <strong>безкоштовно</strong></span>
+            <span class="form-note">🔒 Консультація — <strong>безкоштовно</strong></span>
             <button type="submit" class="btn-primary">
               Надіслати <span>→</span>
             </button>
