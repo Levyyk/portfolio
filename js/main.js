@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Поява при скролі
+    // Анімація появи елементів
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
         let delay = 0;
@@ -17,13 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     revealEls.forEach(el => observer.observe(el));
 
-    // Навбар
+    // Прозорість навбару при скролі
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         navbar.classList.toggle('scrolled', window.scrollY > 20);
     }, { passive: true });
 
-    // Форма
+    // Обробка форми через Formspree
     const form = document.getElementById('contact-form');
     if (form) {
         form.addEventListener('submit', async (e) => {
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 btn.innerHTML = 'Надіслано ✅';
                 form.reset();
-                setTimeout(() => { btn.innerHTML = originalText; }, 3000);
+                setTimeout(() => { btn.innerHTML = originalText; }, 4000);
             } else {
                 btn.innerHTML = 'Помилка ❌';
             }
