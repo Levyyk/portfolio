@@ -30,9 +30,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* ГОЛОВНЕ ВИПРАВЛЕННЯ: Скрол тепер зупиняє заголовок посередині екрана ноутбука */
+    /* ІДЕАЛЬНЕ ЦЕНТРУВАННЯ: Третина екрана + 60 пікселів вниз */
     section { 
-      scroll-margin-top: 35vh !important; 
+      scroll-margin-top: calc(35vh + 60px) !important; 
     }
 
     body {
@@ -89,6 +89,7 @@
       background: rgba(108,124,255,0.07); border: 1px solid rgba(108,124,255,0.25);
       font-size: 0.75rem; color: var(--accent); transition: all var(--t);
     }
+    .nav-cta:hover { background: rgba(108,124,255,0.15); border-color: var(--accent); }
 
     /* =============================================
        HERO
@@ -111,13 +112,13 @@
     /* =============================================
        SECTIONS COMMON
     ============================================= */
-    section { padding: 40px 5vw 120px; position: relative; z-index: 1; }
+    section { padding: 40px 5vw 100px; position: relative; z-index: 1; }
     .section-label { font-size: 0.65rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.1; margin-bottom: 40px; }
 
     /* =============================================
-       SERVICES (2x2 Grid)
+       SERVICES
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; }
@@ -154,7 +155,9 @@
     /* =============================================
        CONTACT
     ============================================= */
-    #contact { padding-bottom: 60vh; } 
+    /* ЗАПАС ХОДУ: 70% висоти екрана знизу, щоб все могло піднятися до центру */
+    #contact { padding-bottom: 70vh; } 
+
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; transition: 0.3s; }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
@@ -171,16 +174,11 @@
     /* FOOTER */
     footer { padding: 40px 5vw; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
 
-    /* REVEAL ANIMATION */
+    /* REVEAL */
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE (Сітка 2х2 + мобільні шрифти) */
-    @media (max-width: 1024px) {
-      .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
-      section { scroll-margin-top: 20vh !important; }
-    }
-    
+    /* RESPONSIVE */
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -188,7 +186,8 @@
       .card-title { font-size: 0.75rem; }
       .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
       .form-row { grid-template-columns: 1fr; }
-      section { scroll-margin-top: 10vh !important; }
+      /* Мобільним скрол робимо трохи вище для зручності */
+      section { scroll-margin-top: 100px !important; }
     }
   </style>
 </head>
@@ -273,14 +272,10 @@
             <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Без переплат.</p>
           </div>
         </div>
-        <div class="about-stack reveal">
-          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">MySQL</span>
-        </div>
       </div>
       <div class="about-stats reveal">
         <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Проєктів</div></div>
         <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація</div></div>
-        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Відповідь</div></div>
       </div>
     </div>
   </section>
