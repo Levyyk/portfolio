@@ -89,17 +89,19 @@
        ОБОВ'ЯЗКОВЕ ЦЕНТРУВАННЯ ТА ОДНАКОВА ВИСОТА
     ============================================= */
     section { 
-      min-height: 100vh; 
+      min-height: 100vh; /* Кожна секція на весь екран */
       display: flex;
       flex-direction: column;
-      justify-content: center; 
+      justify-content: center; /* Центрування по вертикалі */
       padding: 0 5vw;
       position: relative;
       z-index: 1;
-      scroll-margin-top: calc(35vh + 60px) !important;
     }
 
-    .section-content-wrapper { padding-top: 60px; }
+    /* Коригування для ноутбуків: заголовок трохи нижче центру */
+    .section-content-wrapper {
+      padding-top: 60px; 
+    }
 
     /* =============================================
        HERO
@@ -142,63 +144,39 @@
     ============================================= */
     .about-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: start; }
     .about-description p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
-    .mission-panel { display: flex; gap: 24px; background: var(--surface); border: 1px solid var(--border); padding: 35px; border-radius: var(--radius); margin-top: 20px; margin-bottom: 40px; }
+    
+    .mission-panel { 
+      display: flex; gap: 24px; background: var(--surface); border: 1px solid var(--border); 
+      padding: 35px; border-radius: var(--radius); margin-top: 20px; margin-bottom: 40px; 
+    }
     .mission-line { width: 4px; background: #3b4cff; border-radius: 10px; flex-shrink: 0; }
     .mission-title { font-family: var(--font-display); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 16px; display: block; }
     .mission-main-text { font-size: 1.1rem; line-height: 1.7; font-weight: 300; }
+
     .about-stack { display: flex; flex-wrap: wrap; gap: 10px; }
     .stack-pill { padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-size: 0.75rem; color: var(--text-muted); }
+
     .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; margin-bottom: 16px; }
     .stat-number { font-family: var(--font-display); font-weight: 900; font-size: 2.6rem; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .stat-label { font-size: 0.85rem; color: #fff; }
 
     /* =============================================
-       CONTACT & FORM (ВРУЧНУ ДОВЕДЕНО ДО ЛАДУ)
+       CONTACT
     ============================================= */
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
     .contact-link-value { color: #fff; font-size: 0.9rem; font-weight: 500; }
 
-    .contact-form-box { 
-      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); 
-      padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
-    }
+    .contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-    .form-field label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; }
-    
-    /* СТИЛІ ПОЛІВ ВВОДУ */
-    .form-field input, .form-field textarea, .form-field select { 
-      background: var(--surface-2); border: 1px solid var(--border); padding: 14px 18px; 
-      border-radius: var(--radius); color: #fff; font-family: inherit; font-size: 0.95rem; 
-      transition: 0.3s var(--ease); outline: none; 
-    }
-    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { 
-      border-color: var(--accent); background: var(--surface-3); box-shadow: 0 0 15px rgba(108, 124, 255, 0.1);
-    }
-    .form-field textarea { min-height: 120px; resize: none; }
-
-    /* Custom Select Arrow */
-    select { 
-      appearance: none; 
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237070a0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); 
-      background-repeat: no-repeat; 
-      background-position: right 18px center;
-    }
-
-    /* КНОПКА ВІДПРАВКИ */
-    .btn-submit {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff; border: none; padding: 16px 32px; border-radius: var(--radius);
-      font-family: inherit; font-weight: 600; font-size: 0.95rem; cursor: pointer;
-      transition: 0.3s var(--ease); box-shadow: 0 4px 15px rgba(108, 124, 255, 0.3);
-      width: fit-content; display: inline-flex; align-items: center; gap: 10px;
-    }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(108, 124, 255, 0.5); opacity: 0.9; }
+    .form-field label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; }
+    .form-field input, .form-field textarea, .form-field select { background: var(--surface-2); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); color: #fff; font-family: inherit; transition: 0.3s; outline: none; }
+    .form-field textarea { min-height: 100px; resize: none; }
 
     /* FOOTER */
-    footer { padding: 40px 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+    footer { padding: 40px 5vw; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
 
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
@@ -207,8 +185,9 @@
     /* RESPONSIVE */
     @media (max-width: 1024px) {
       .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
-      section { min-height: auto; padding: 80px 5vw; }
+      section { min-height: auto; padding: 80px 5vw; } /* На планшетах скасовуємо фіксовану висоту */
     }
+    
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -243,8 +222,8 @@
       <h1 class="hero-name">Привіт,<br>я <span class="outline">Levik</span></h1>
       <p class="hero-tagline">IT-послуги для малого бізнесу —<br><strong>швидко, чесно і без зайвого.</strong></p>
       <div class="hero-cta">
-        <a href="#contact" class="btn-submit">Обговорити проєкт <span>↓</span></a>
-        <a href="#services" style="border: 1px solid var(--border-light); padding: 16px 32px; border-radius: var(--radius); color: var(--text-muted);" class="btn-ghost">Що я роблю <span>→</span></a>
+        <a href="#contact" class="btn-primary">Обговорити проєкт <span>↓</span></a>
+        <a href="#services" class="btn-ghost">Що я роблю <span>→</span></a>
       </div>
     </div>
   </section>
@@ -339,7 +318,6 @@
             <div class="form-field">
               <label>Що потрібно?</label>
               <select name="service" required>
-                  <!-- ЗА ЗАМОВЧУВАННЯМ: ОБРАТИ ПОСЛУГУ -->
                   <option value="" disabled selected>Оберіть послугу...</option>
                   <option value="python">Python скрипти</option>
                   <option value="excel">Excel автоматизація</option>
@@ -348,7 +326,7 @@
               </select>
             </div>
             <div class="form-field"><label>Задача</label><textarea name="message" placeholder="Опишіть детальніше..." required></textarea></div>
-            <button type="submit" class="btn-submit">Надіслати <span>→</span></button>
+            <button type="submit" class="btn-primary">Надіслати <span>→</span></button>
           </form>
           <div id="form-success" style="display:none; text-align:center;">
             <div style="font-size:3rem; margin-bottom:20px;">✅</div>
