@@ -30,10 +30,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* ВИПРАВЛЕННЯ: Вручну задаємо точку зупинки (25% висоти екрана від верху) */
+    /* ІДЕАЛЬНЕ ЦЕНТРУВАННЯ: 25% висоти екрана + додаткові 60 пікселів */
     section { 
-      scroll-margin-top: 25vh; 
-      min-height: 60vh; /* Секції тепер мають мінімальну висоту, щоб було куди скролити */
+      scroll-margin-top: calc(25vh + 60px); 
     }
 
     body {
@@ -110,9 +109,9 @@
     .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
     /* =============================================
-       SECTIONS
+       SECTIONS COMMON
     ============================================= */
-    section { padding: 60px 5vw 120px; position: relative; z-index: 1; }
+    section { padding: 40px 5vw 100px; position: relative; z-index: 1; }
     .section-label { font-size: 0.65rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.1; margin-bottom: 40px; }
@@ -155,8 +154,9 @@
     /* =============================================
        CONTACT
     ============================================= */
-    /* Додаємо багато місця в самому низу, щоб Контакти могли піднятися до центру */
-    #contact { padding-bottom: 40vh; }
+    /* ЗАПАС ХОДУ: Великий відступ знизу, щоб форма могла піднятися до центру */
+    #contact { padding-bottom: 60vh; } 
+
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; transition: 0.3s; }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
@@ -177,20 +177,23 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE (2x2 Grid + Mobile Optimization) */
     @media (max-width: 1024px) {
       .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
     }
     
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
-      /* Сітка 2х2 */
+      
+      /* Послуги 2х2 */
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .card { padding: 18px 12px; }
       .card-title { font-size: 0.75rem; }
       .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+      
       .form-row { grid-template-columns: 1fr; }
-      /* Зменшуємо відступ скролу для телефонів, щоб не було дірок */
+      
+      /* На мобілках скрол робимо трохи вище, щоб заголовок був ближче до верху */
       section { scroll-margin-top: 100px; }
     }
   </style>
@@ -201,7 +204,8 @@
   <div class="blob blob-2"></div>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo">Lev<span>ik</span></a>
+    <!-- Повернення на самий верх (Hero) -->
+    <a href="#hero" class="nav-logo">Lev<span>ik</span></a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#services">Послуги</a></li>
@@ -212,6 +216,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-badge"><span class="hero-badge-dot"></span>Відкритий до замовлень</div>
@@ -224,6 +229,7 @@
     </div>
   </section>
 
+  <!-- SERVICES -->
   <section id="services">
     <div class="section-header">
       <p class="section-label reveal">Послуги</p>
@@ -234,123 +240,4 @@
         <span class="card-number">01</span>
         <div class="card-icon">🐍</div>
         <div class="card-title">Python-скрипти</div>
-        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, інтеграції з API.</p>
-        <div class="card-footer"><span class="card-tag">Автоматизація</span><span class="card-arrow">↗</span></div>
-      </div>
-      <div class="card reveal">
-        <span class="card-number">02</span>
-        <div class="card-icon">📊</div>
-        <div class="card-title">Автоматизація Excel</div>
-        <p class="card-desc">Макроси, формули. Перетворю Excel на інструмент, що працює сам.</p>
-        <div class="card-footer"><span class="card-tag">Excel / VBA</span><span class="card-arrow">↗</span></div>
-      </div>
-      <div class="card reveal">
-        <span class="card-number">03</span>
-        <div class="card-icon">🔎</div>
-        <div class="card-title">Парсери даних</div>
-        <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти. Результат — зручний Excel.</p>
-        <div class="card-footer"><span class="card-tag">Scraping</span><span class="card-arrow">↗</span></div>
-      </div>
-      <div class="card reveal">
-        <span class="card-number">04</span>
-        <div class="card-icon">🤖</div>
-        <div class="card-title">Telegram-боти</div>
-        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Швидко і недорого.</p>
-        <div class="card-footer"><span class="card-tag">API / Bots</span><span class="card-arrow">↗</span></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="about-inner">
-      <div class="about-text">
-        <p class="section-label reveal">Про мене</p>
-        <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
-        <div class="about-description reveal">
-          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
-        </div>
-        <div class="mission-panel reveal">
-          <div class="mission-line"></div>
-          <div class="mission-content">
-            <span class="mission-title">Моя місія</span>
-            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою.</p>
-          </div>
-        </div>
-      </div>
-      <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
-        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="section-header">
-      <p class="section-label reveal">Контакт</p>
-      <h2 class="section-title reveal">Є задача? Пишіть.</h2>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-quick reveal">
-        <a href="mailto:your@email.com" class="contact-link"><div class="contact-link-icon">✉️</div><div class="contact-link-value">your@email.com</div></a>
-        <a href="https://t.me/your_username" target="_blank" class="contact-link"><div class="contact-link-icon">✈️</div><div class="contact-link-value">@your_username</div></a>
-      </div>
-      <div class="contact-form-box reveal">
-        <form id="contact-form" action="https://formspree.io/f/mjgperkg" method="POST">
-          <div class="form-row">
-            <div class="form-field"><label>Ваше ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
-            <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="ivan@example.com" required></div>
-          </div>
-          <div class="form-field">
-            <label>Що потрібно?</label>
-            <select name="service" required>
-                <option value="" disabled selected>Оберіть послугу...</option>
-                <option value="python">Python скрипти</option>
-                <option value="excel">Excel автоматизація</option>
-                <option value="scraping">Парсинг даних</option>
-                <option value="bot">Telegram бот</option>
-            </select>
-          </div>
-          <div class="form-field"><label>Опишіть задачу</label><textarea name="message" placeholder="Розкажіть детальніше..." required></textarea></div>
-          <button type="submit" class="btn-primary">Надіслати <span>→</span></button>
-        </form>
-        <div id="form-success" style="display:none; text-align:center;">
-          <div style="font-size:3rem; margin-bottom:20px;">✅</div>
-          <h3>Надіслано!</h3><p>Відповім протягом дня.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer><div class="footer-logo">Lev<span>ik</span></div><p>© 2025 Levik. Зроблено у Львові 🇺🇦</p></footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const revealEls = document.querySelectorAll('.reveal');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => entry.target.classList.add('visible'), 50);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        revealEls.forEach(el => observer.observe(el));
-
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
-
-        const form = document.getElementById('contact-form'), formSuccess = document.getElementById('form-success');
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = form.querySelector('button'); btn.innerHTML = 'Надсилаємо...';
-                try {
-                    const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                    if (res.ok) { form.style.display = 'none'; formSuccess.style.display = 'block'; }
-                } catch { btn.innerHTML = 'Помилка ❌'; }
-            });
-        }
-    });
-  </script>
-</body>
-</html>
+        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів,
