@@ -28,10 +28,14 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { 
+        scroll-behavior: smooth; 
+    }
     
-    /* Відступи для скролу, щоб навбар не перекривав заголовок */
-    section { scroll-margin-top: 80px; }
+    /* ВИПРАВЛЕННЯ: Щоб секція не заїжджала під меню при кліку */
+    section { 
+        scroll-margin-top: 100px; 
+    }
 
     body {
       background: var(--bg);
@@ -198,9 +202,10 @@
     }
 
     /* =============================================
-       SECTIONS COMMON
+       SECTION COMMON
     ============================================= */
     section { padding: 100px 5vw; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+    
     .section-label {
       font-size: 0.68rem;
       text-transform: uppercase;
@@ -239,7 +244,6 @@
       padding: 34px 30px;
       transition: all var(--t) var(--ease);
       position: relative;
-      overflow: hidden;
     }
     .card:hover { border-color: #313148; background: var(--surface-2); transform: translateY(-5px); }
     .card-number {
@@ -293,13 +297,17 @@
     .stat-label { font-size: 0.9rem; color: #fff; }
 
     /* =============================================
-       CONTACT
+       CONTACT (ВИПРАВЛЕННЯ ВІЗУАЛУ)
     ============================================= */
+    #contact { 
+        padding-bottom: 150px; /* Більше місця знизу, щоб форма не обрізалась */
+    }
+
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
     .contact-link { 
       display: flex; align-items: center; gap: 16px; padding: 20px; 
       background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); 
-      margin-bottom: 12px; transition: 0.3s; position: relative; z-index: 2;
+      margin-bottom: 12px; transition: 0.3s; 
     }
     .contact-link:hover { border-color: var(--accent); transform: translateX(5px); }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 12px; }
@@ -308,7 +316,7 @@
 
     .contact-form-box { 
       background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); 
-      padding: 36px; position: relative; z-index: 2;
+      padding: 36px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); /* Додано тінь для об'єму */
     }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
     .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
@@ -321,12 +329,12 @@
     .form-field textarea { min-height: 110px; resize: none; }
 
     /* BUTTONS */
-    .btn-primary { background: var(--accent); color: #fff; padding: 15px 30px; border-radius: var(--radius); border: none; font-weight: 500; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 24px rgba(108,124,255,0.3); }
-    .btn-ghost { border: 1px solid var(--border); padding: 15px 30px; border-radius: var(--radius); color: var(--text-muted); transition: 0.3s; }
+    .btn-primary { background: var(--accent); color: #fff; padding: 15px 32px; border-radius: var(--radius); border: none; font-weight: 500; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 24px rgba(108,124,255,0.3); }
+    .btn-ghost { border: 1px solid var(--border); padding: 15px 32px; border-radius: var(--radius); color: var(--text-muted); transition: 0.3s; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(108,124,255,0.5); }
 
     /* FOOTER */
-    footer { padding: 30px 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
+    footer { padding: 30px 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-dim); }
 
     /* ANIMATIONS */
     .reveal { opacity: 0; transform: translateY(26px); transition: 0.8s var(--ease); }
@@ -352,7 +360,8 @@
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">Lev<span>ik</span></a>
+    <!-- Логотип повертає в самий верх -->
+    <a href="#" class="nav-logo">Lev<span>ik</span></a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#services">Послуги</a></li>
@@ -363,7 +372,7 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO (Видалено Scroll індикатор) -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-badge">
@@ -485,7 +494,7 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT (ВИПРАВЛЕНО ПЕРЕХІД І ВІЗУАЛ) -->
   <section id="contact">
     <div class="section-header">
       <p class="section-label reveal">Контакт</p>
@@ -500,7 +509,6 @@
             <div class="contact-link-label">Email</div>
             <div class="contact-link-value">your@email.com</div>
           </div>
-          <span class="contact-link-arrow">→</span>
         </a>
         <a href="https://t.me/your_username" target="_blank" class="contact-link">
           <div class="contact-link-icon">✈️</div>
@@ -508,7 +516,6 @@
             <div class="contact-link-label">Telegram</div>
             <div class="contact-link-value">@your_username</div>
           </div>
-          <span class="contact-link-arrow">→</span>
         </a>
       </div>
 
@@ -555,7 +562,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Reveal elements
+        // Reveal elements logic
         const revealEls = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             let delay = 0;
@@ -572,13 +579,13 @@
 
         revealEls.forEach(el => observer.observe(el));
 
-        // Navbar scrolled state
+        // Nav scrolled logic
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 20);
         }, { passive: true });
 
-        // Formspree AJAX
+        // AJAX Form logic
         const form = document.getElementById('contact-form');
         const formSuccess = document.getElementById('form-success');
         const submitBtn = document.getElementById('submit-btn');
@@ -586,7 +593,6 @@
         if (form) {
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const originalText = submitBtn.innerHTML;
                 submitBtn.innerHTML = 'Надсилаємо...';
                 submitBtn.disabled = true;
 
@@ -596,7 +602,6 @@
                         body: new FormData(form),
                         headers: { 'Accept': 'application/json' }
                     });
-
                     if (response.ok) {
                         form.style.display = 'none';
                         formSuccess.style.display = 'block';
@@ -604,11 +609,8 @@
                         throw new Error();
                     }
                 } catch (err) {
-                    submitBtn.innerHTML = 'Помилка ❌';
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                    }, 3000);
+                    submitBtn.innerHTML = 'Помилка ❌ Спробуйте ще';
+                    submitBtn.disabled = false;
                 }
             });
         }
