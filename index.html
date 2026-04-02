@@ -6,7 +6,7 @@
   <title>Levik — IT-послуги для малого бізнесу</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg:          #070710;
@@ -21,6 +21,7 @@
       --green:       #34d399;
       --font-display:'Unbounded', sans-serif;
       --font-body:   'Geologica', sans-serif;
+      --font-mono:   'JetBrains Mono', monospace;
       --radius:      14px;
       --radius-lg:   22px;
       --t:           0.3s;
@@ -106,6 +107,12 @@
     /* =============================================
        HERO
     ============================================= */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px; padding: 7px 16px;
       border-radius: 100px; border: 1px solid var(--border); background: var(--surface);
@@ -119,6 +126,72 @@
     .hero-tagline { font-size: 1.1rem; color: var(--text-muted); max-width: 520px; margin-bottom: 40px; }
     .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
+    /* Code Window Decoration */
+    .code-window {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+    .code-window:hover {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    }
+    .code-header {
+      background: var(--surface-2);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dots span:nth-child(1) { background: #ff5f56; }
+    .code-dots span:nth-child(2) { background: #ffbd2e; }
+    .code-dots span:nth-child(3) { background: #27c93f; }
+    .code-title {
+      flex: 1; text-align: center; font-family: var(--font-mono); font-size: 0.75rem;
+      color: var(--text-muted); margin-left: -40px;
+    }
+    .code-body {
+      padding: 24px; font-family: var(--font-mono); font-size: 0.85rem;
+      line-height: 1.6; color: var(--text); overflow-x: auto;
+    }
+    .code-body pre { margin: 0; }
+    .code-body .kw { color: #ff7b72; } /* Keyword */
+    .code-body .cl { color: #d2a8ff; } /* Class/Function */
+    .code-body .sl { color: #79c0ff; } /* Self */
+    .code-body .st { color: #a5d6ff; } /* String */
+    .code-body .cm { color: #8b949e; font-style: italic; } /* Comment */
+
+    /* =============================================
+       BUTTONS
+    ============================================= */
+    .btn-primary, .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 28px; border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+      transition: all var(--t) var(--ease); cursor: pointer; border: none; outline: none;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+      box-shadow: 0 4px 15px rgba(108,124,255,0.25);
+    }
+    .btn-primary:hover {
+      background: #5a6ae6; transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108,124,255,0.4);
+    }
+    .btn-ghost {
+      background: rgba(255,255,255,0.03); color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.08); border-color: var(--text-muted);
+    }
+
     /* =============================================
        HEADERS
     ============================================= */
@@ -130,13 +203,13 @@
        SERVICES (2x2 Grid)
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; display: flex; flex-direction: column; }
     .card:hover { border-color: #313148; background: var(--surface-2); transform: translateY(-5px); }
     .card-number { position: absolute; top: 24px; right: 24px; font-family: var(--font-display); font-size: 0.6rem; color: var(--text-dim); }
     .card-icon { width: 48px; height: 48px; background: rgba(108,124,255,0.07); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
     .card-title { font-family: var(--font-display); font-size: 0.9rem; margin-bottom: 14px; }
     .card-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 20px; }
-    .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; margin-top: auto; }
     .card-tag { padding: 4px 10px; border-radius: 100px; background: rgba(108,124,255,0.07); font-size: 0.65rem; color: var(--accent); }
 
     /* =============================================
@@ -153,6 +226,12 @@
     .mission-title { font-family: var(--font-display); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 16px; display: block; }
     .mission-main-text { font-size: 1.1rem; line-height: 1.7; font-weight: 300; }
 
+    .about-checklist { list-style: none; margin-bottom: 35px; display: flex; flex-direction: column; gap: 14px; }
+    .about-checklist li { display: flex; align-items: flex-start; gap: 14px; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
+    .about-checklist li strong { color: #fff; font-weight: 500; }
+    .check-icon { display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgba(52, 211, 153, 0.1); color: var(--green); border-radius: 50%; font-size: 0.7rem; font-weight: bold; flex-shrink: 0; margin-top: 2px; }
+
+    .stack-label { display: block; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em; }
     .about-stack { display: flex; flex-wrap: wrap; gap: 10px; }
     .stack-pill { padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-size: 0.75rem; color: var(--text-muted); }
 
@@ -163,12 +242,14 @@
     /* =============================================
        CONTACT
     ============================================= */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
-    .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; }
-    .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
-    .contact-link-value { color: #fff; font-size: 0.9rem; font-weight: 500; }
-
+    .contact-wrapper { max-width: 700px; width: 100%; }
     .contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    
+    .contact-direct { margin-top: 24px; font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .direct-links { display: flex; gap: 16px; }
+    .direct-links a { color: #fff; text-decoration: underline !important; text-decoration-color: var(--border) !important; text-underline-offset: 4px; transition: all var(--t); }
+    .direct-links a:hover { color: var(--accent); text-decoration-color: var(--accent) !important; }
+
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
     .form-field label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; }
@@ -183,18 +264,65 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* RESPONSIVE */
+    .mobile-menu-btn { display: none; background: none; border: none; color: var(--text); cursor: pointer; padding: 4px; }
+
     @media (max-width: 1024px) {
-      .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+      .hero-right { display: none; }
+      .about-inner { grid-template-columns: 1fr; gap: 30px; }
       section { min-height: auto; padding: 80px 5vw; } /* На планшетах скасовуємо фіксовану висоту */
     }
     
     @media (max-width: 768px) {
-      .nav-links, .nav-cta { display: none; }
+      .nav-cta { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav-links {
+        position: absolute; top: 68px; left: 0; right: 0;
+        background: rgba(7, 7, 16, 0.95); backdrop-filter: blur(24px);
+        flex-direction: column; padding: 20px 5vw 30px; gap: 20px;
+        border-bottom: 1px solid var(--border);
+        transform: translateY(-150%); opacity: 0; pointer-events: none;
+        transition: all var(--t) var(--ease);
+      }
+      .nav-links.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .nav-links li { text-align: center; }
+      .nav-links a { font-size: 1rem; }
+      
+      section { padding: 60px 5vw; }
+      .section-content-wrapper { padding-top: 20px; }
+      
+      .hero-name { font-size: 2.5rem; margin-bottom: 16px; }
+      .hero-tagline { font-size: 0.95rem; margin-bottom: 30px; }
+      .hero-cta { flex-direction: column; width: 100%; gap: 12px; }
+      .btn-primary, .btn-ghost { width: 100%; padding: 12px 20px; font-size: 0.85rem; }
+      
+      .section-title { font-size: 1.8rem; margin-bottom: 30px; }
+      
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .card { padding: 18px 12px; }
-      .card-title { font-size: 0.75rem; }
-      .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
-      .form-row { grid-template-columns: 1fr; }
+      .card { padding: 16px 12px; }
+      .card-number { top: 12px; right: 12px; font-size: 0.55rem; }
+      .card-icon { width: 36px; height: 36px; font-size: 1.1rem; margin-bottom: 10px; border-radius: 8px; }
+      .card-title { font-size: 0.75rem; margin-bottom: 8px; }
+      .card-desc { font-size: 0.65rem; margin-bottom: 12px; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+      .card-footer { padding-top: 10px; }
+      .card-tag { font-size: 0.55rem; padding: 3px 8px; }
+      
+      .about-description p { font-size: 0.95rem; }
+      .mission-panel { padding: 20px; gap: 16px; margin-bottom: 30px; }
+      .mission-main-text { font-size: 0.95rem; }
+      
+      .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .stat-card { padding: 20px 16px; margin-bottom: 0; }
+      .stat-card:last-child { grid-column: 1 / -1; }
+      .stat-number { font-size: 1.8rem; }
+      .stat-label { font-size: 0.75rem; }
+      
+      .contact-form-box { padding: 24px 20px; }
+      .contact-direct { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .direct-links { flex-direction: column; gap: 8px; }
+      
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-field input, .form-field textarea, .form-field select { padding: 12px; font-size: 0.85rem; }
     }
   </style>
 </head>
@@ -206,24 +334,54 @@
   <nav id="navbar">
     <a href="#hero" class="nav-logo">Lev<span>ik</span></a>
     <div class="nav-right">
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="#services">Послуги</a></li>
         <li><a href="#about">Про мене</a></li>
         <li><a href="#contact">Контакт</a></li>
       </ul>
       <a href="#contact" class="nav-cta">Написати →</a>
+      <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
     </div>
   </nav>
 
   <!-- HERO -->
   <section id="hero">
     <div class="section-content-wrapper">
-      <div class="hero-badge"><span class="hero-badge-dot"></span>Відкритий до замовлень</div>
-      <h1 class="hero-name">Привіт,<br>я <span class="outline">Levik</span></h1>
-      <p class="hero-tagline">IT-послуги для малого бізнесу —<br><strong>швидко, чесно і без зайвого.</strong></p>
-      <div class="hero-cta">
-        <a href="#contact" class="btn-primary">Обговорити проєкт <span>↓</span></a>
-        <a href="#services" class="btn-ghost">Що я роблю <span>→</span></a>
+      <div class="hero-grid">
+        <div class="hero-left">
+          <div class="hero-badge"><span class="hero-badge-dot"></span>Відкритий до замовлень</div>
+          <h1 class="hero-name">Привіт,<br>я <span class="outline">Levik</span></h1>
+          <p class="hero-tagline">IT-послуги для малого бізнесу —<br><strong>швидко, чесно і без зайвого.</strong></p>
+          <div class="hero-cta">
+            <a href="#contact" class="btn-primary">Обговорити проєкт <span>↓</span></a>
+            <a href="#services" class="btn-ghost">Що я роблю <span>→</span></a>
+          </div>
+        </div>
+        <div class="hero-right reveal">
+          <div class="code-window">
+            <div class="code-header">
+              <div class="code-dots"><span></span><span></span><span></span></div>
+              <div class="code-title">skills.py</div>
+            </div>
+            <div class="code-body">
+<pre><code><span class="kw">class</span> <span class="cl">Levik</span>:
+    <span class="kw">def</span> <span class="cl">__init__</span>(<span class="sl">self</span>):
+        <span class="sl">self</span>.role = <span class="st">"IT Consultant"</span>
+        <span class="sl">self</span>.focus = <span class="st">"Automation & Bots"</span>
+
+    <span class="kw">def</span> <span class="cl">solve_problem</span>(<span class="sl">self</span>, task):
+        <span class="kw">if</span> task.is_boring_and_manual():
+            <span class="kw">return</span> <span class="sl">self</span>.automate(task)
+        <span class="kw">return</span> <span class="st">"Done! 🚀"</span>
+
+<span class="cm"># Less routine. More results.</span>
+levik = Levik()
+levik.solve_problem(your_business)</code></pre>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -285,13 +443,22 @@
               <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою.</p>
             </div>
           </div>
-          <div class="about-stack reveal">
-            <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel</span><span class="stack-pill">MySQL</span>
+          <ul class="about-checklist reveal">
+            <li><span class="check-icon">✓</span> <span><strong>Прозорість:</strong> пояснюю все без складних ІТ-термінів</span></li>
+            <li><span class="check-icon">✓</span> <span><strong>Надійність:</strong> не зникаю після здачі проєкту</span></li>
+            <li><span class="check-icon">✓</span> <span><strong>Ефективність:</strong> пропоную оптимальні, а не найдорожчі рішення</span></li>
+          </ul>
+          <div class="about-stack-wrapper reveal">
+            <span class="stack-label">Мій арсенал:</span>
+            <div class="about-stack">
+              <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel</span><span class="stack-pill">MySQL</span>
+            </div>
           </div>
         </div>
         <div class="about-stats reveal">
           <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Проєктів</div></div>
           <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація</div></div>
+          <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Підтримка після здачі</div></div>
         </div>
       </div>
     </div>
@@ -304,16 +471,18 @@
         <p class="section-label reveal">Контакт</p>
         <h2 class="section-title reveal">Є задача? Пишіть.</h2>
       </div>
-      <div class="contact-grid">
-        <div class="contact-quick reveal">
-          <a href="mailto:your@email.com" class="contact-link"><div class="contact-link-icon">✉️</div><div class="contact-link-value">your@email.com</div></a>
-          <a href="https://t.me/your_username" target="_blank" class="contact-link"><div class="contact-link-icon">✈️</div><div class="contact-link-value">@your_username</div></a>
-        </div>
+      <div class="contact-wrapper">
         <div class="contact-form-box reveal">
           <form id="contact-form" action="https://formspree.io/f/mjgperkg" method="POST">
             <div class="form-row">
-              <div class="form-field"><label>Ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
-              <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="ivan@example.com" required></div>
+              <div class="form-field">
+                <label>Ім'я та прізвище</label>
+                <input type="text" name="name" placeholder="Іван Франко" pattern="^[a-zA-Zа-яА-ЯіІїЇєЄґҐ' \-]+$" title="Будь ласка, використовуйте лише літери" required>
+              </div>
+              <div class="form-field">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="ivan@example.com" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" title="Введіть дійсну електронну адресу" required>
+              </div>
             </div>
             <div class="form-field">
               <label>Що потрібно?</label>
@@ -331,6 +500,13 @@
           <div id="form-success" style="display:none; text-align:center;">
             <div style="font-size:3rem; margin-bottom:20px;">✅</div>
             <h3>Надіслано!</h3><p>Відповім протягом дня.</p>
+          </div>
+        </div>
+        <div class="contact-direct reveal">
+          <p>Або напишіть мені напряму:</p>
+          <div class="direct-links">
+            <a href="mailto:your@email.com">your@email.com</a>
+            <a href="https://t.me/your_username" target="_blank">@your_username</a>
           </div>
         </div>
       </div>
@@ -354,6 +530,13 @@
 
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        mobileBtn.addEventListener('click', () => navLinks.classList.toggle('active'));
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
 
         const form = document.getElementById('contact-form'), formSuccess = document.getElementById('form-success');
         if (form) {
