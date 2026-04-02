@@ -1,0 +1,393 @@
+/* =============================================
+   1. ЗМІННІ ТА НАЛАШТУВАННЯ (Змінюй кольори тут)
+   ============================================= */
+:root {
+  --bg:          #070710;
+  --surface:     #0e0e1a;
+  --surface-2:   #14141f;
+  --surface-3:   #1a1a28;
+  --border:      #252535;
+  --border-light:#313148;
+  --accent:      #6c7cff;
+  --accent-2:    #a78bfa;
+  --accent-glow: rgba(108, 124, 255, 0.4);
+  --accent-soft: rgba(108, 124, 255, 0.07);
+  --accent-soft2:rgba(167, 139, 250, 0.07);
+  --text:        #eeeef5;
+  --text-muted:  #7070a0;
+  --text-dim:    #40405a;
+  --green:       #34d399;
+  --green-soft:  rgba(52, 211, 153, 0.1);
+  --font-display:'Unbounded', sans-serif;
+  --font-body:   'Geologica', sans-serif;
+  --radius:      14px;
+  --radius-lg:   22px;
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --t:           0.3s;
+}
+
+/* =============================================
+   2. БАЗОВІ СТИЛІ ТА ФОН (Грейн та Блоби)
+   ============================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* Текстура шуму (Grain) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Фонові плями (Blobs) */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  animation: blobFloat 12s ease-in-out infinite;
+}
+.blob-1 {
+  width: 500px; height: 500px;
+  top: -200px; right: -100px;
+  background: radial-gradient(circle, rgba(108,124,255,0.12), transparent 70%);
+}
+.blob-2 {
+  width: 400px; height: 400px;
+  bottom: 20%; left: -150px;
+  background: radial-gradient(circle, rgba(167,139,250,0.08), transparent 70%);
+  animation-delay: -6s;
+}
+
+/* =============================================
+   3. НАВІГАЦІЯ (NAV)
+   ============================================= */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 5vw;
+  height: 68px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(7, 7, 16, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t) var(--ease), background var(--t) var(--ease);
+}
+nav.scrolled {
+  border-color: var(--border);
+  background: rgba(7, 7, 16, 0.9);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.nav-logo span { color: var(--accent); }
+
+.nav-right { display: flex; align-items: center; gap: 32px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color var(--t);
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(108,124,255,0.25);
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 500;
+  transition: background var(--t), border-color var(--t), transform var(--t);
+}
+
+/* =============================================
+   4. ГОЛОВНИЙ ЕКРАН (HERO)
+   ============================================= */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 100px 5vw 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.25;
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+  pointer-events: none;
+}
+
+.hero-inner { max-width: 900px; position: relative; z-index: 1; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border-light);
+  background: var(--surface);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 36px;
+  animation: fadeUp 0.7s ease both;
+}
+.hero-badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  line-height: 0.93;
+  letter-spacing: -0.045em;
+  margin-bottom: 28px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero-name .outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--accent);
+  filter: drop-shadow(0 0 24px rgba(108,124,255,0.35));
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--text-muted);
+  font-weight: 400;
+  max-width: 520px;
+  margin-bottom: 52px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.7s 0.3s ease both; }
+
+/* Кнопки */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 30px; border-radius: var(--radius);
+  background: var(--accent); color: #fff;
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 500;
+  cursor: pointer; border: none; position: relative; overflow: hidden;
+  transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+  box-shadow: 0 4px 24px rgba(108,124,255,0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(108,124,255,0.5); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 30px; border-radius: var(--radius);
+  border: 1px solid var(--border-light); background: transparent;
+  color: var(--text-muted); font-size: 0.88rem; cursor: pointer;
+  transition: all var(--t);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); background: var(--accent-soft); }
+
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 5vw;
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase;
+  animation: fadeUp 0.7s 0.5s ease both;
+}
+.scroll-line { width: 40px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+/* =============================================
+   5. ПОСЛУГИ (SERVICES)
+   ============================================= */
+section { padding: 100px 5vw; position: relative; z-index: 1; }
+#services { border-top: 1px solid var(--border); }
+
+.section-header { margin-bottom: 56px; }
+.section-label {
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+.section-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 16px;
+}
+.section-sub { color: var(--text-muted); font-size: 0.98rem; max-width: 500px; }
+
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 34px 30px; display: flex; flex-direction: column; gap: 16px;
+  position: relative; overflow: hidden; transition: all var(--t) var(--ease);
+}
+.card:hover { border-color: var(--border-light); background: var(--surface-2); transform: translateY(-5px); }
+
+.card-number { position: absolute; top: 24px; right: 24px; font-family: var(--font-display); font-size: 0.65rem; color: var(--text-dim); }
+.card-icon {
+  width: 50px; height: 50px; border-radius: 14px; background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.card-title { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; color: var(--text); }
+.card-desc { font-size: 0.86rem; color: var(--text-muted); flex: 1; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); }
+.card-tag { padding: 4px 12px; border-radius: 100px; background: var(--accent-soft); font-size: 0.68rem; color: var(--accent); }
+.card-arrow { color: var(--text-dim); font-size: 0.9rem; transition: all var(--t); }
+.card:hover .card-arrow { color: var(--accent); transform: translate(3px, -3px); }
+
+/* =============================================
+   6. ПРО МЕНЕ (ABOUT)
+   ============================================= */
+#about { border-top: 1px solid var(--border); }
+.about-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 72px; align-items: start; }
+.about-text p { color: var(--text-muted); font-size: 1rem; margin-bottom: 20px; }
+
+.experience-line {
+  margin-top: 40px; padding: 20px 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.exp-company { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: var(--text); }
+
+.about-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; }
+.stack-pill {
+  padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border);
+  background: var(--surface); font-size: 0.76rem; color: var(--text-muted); transition: all var(--t);
+}
+.stack-pill:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); }
+
+.about-stats { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 90px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px 26px; transition: all var(--t); }
+.stat-card:hover { border-color: var(--border-light); transform: translateX(4px); }
+.stat-number {
+  font-family: var(--font-display); font-weight: 900; font-size: 2.6rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 8px;
+}
+
+/* =============================================
+   7. КОНТАКТИ (CONTACT)
+   ============================================= */
+#contact { border-top: 1px solid var(--border); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+.contact-quick { display: flex; flex-direction: column; gap: 16px; }
+.contact-link {
+  display: flex; align-items: center; gap: 16px; padding: 18px 20px;
+  border-radius: var(--radius); border: 1px solid var(--border);
+  background: var(--surface); transition: all var(--t);
+}
+.contact-link:hover { border-color: var(--accent); transform: translateX(5px); background: var(--surface-2); }
+.contact-link-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; }
+
+.contact-divider { display: flex; align-items: center; gap: 14px; margin: 4px 0; color: var(--text-dim); font-size: 0.72rem; text-transform: uppercase; }
+.contact-divider::before, .contact-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px 32px; position: relative; }
+.contact-form { display: flex; flex-direction: column; gap: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field label { font-size: 0.68rem; text-transform: uppercase; color: var(--text-dim); }
+.form-field input, .form-field textarea, .form-field select {
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 16px; color: var(--text); font-family: var(--font-body); font-size: 0.88rem; outline: none; transition: all var(--t);
+}
+.form-field input:focus, .form-field textarea:focus { border-color: var(--accent); background: var(--surface-3); }
+.form-field textarea { min-height: 110px; }
+
+.form-success { display: none; text-align: center; padding: 32px 0; }
+
+/* =============================================
+   8. ПІДВАЛ (FOOTER)
+   ============================================= */
+footer {
+  border-top: 1px solid var(--border); padding: 28px 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-logo { font-family: var(--font-display); font-weight: 900; font-size: 0.85rem; color: var(--text-dim); }
+.footer-copy { font-size: 0.76rem; color: var(--text-dim); }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links a { font-size: 0.76rem; color: var(--text-dim); transition: color var(--t); }
+.footer-links a:hover { color: var(--accent); }
+
+/* =============================================
+   9. АНІМАЦІЇ
+   ============================================= */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blobFloat {
+  0%, 100% { transform: scale(1) translate(0,0); }
+  33% { transform: scale(1.05) translate(20px, -30px); }
+  66% { transform: scale(0.97) translate(-15px, 20px); }
+}
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* =============================================
+   10. АДАПТИВНІСТЬ (RESPONSIVE)
+   ============================================= */
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  #hero { padding-top: 90px; }
+  
+  /* Послуги сіткою 2х2 */
+  .services-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .card { padding: 22px 16px; gap: 10px; }
+  .card-icon { width: 38px; height: 38px; font-size: 1.1rem; border-radius: 10px; }
+  .card-title { font-size: 0.82rem; }
+  .card-desc {
+    font-size: 0.74rem; line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-arrow { display: none; }
+  .card-tag { font-size: 0.58rem; padding: 2px 8px; }
+
+  .about-inner { grid-template-columns: 1fr; gap: 48px; }
+  .about-stats { position: static; }
+  .form-row { grid-template-columns: 1fr; }
+  footer { flex-direction: column; text-align: center; }
+  .hero-scroll { display: none; }
+}
