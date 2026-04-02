@@ -30,9 +30,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* ІДЕАЛЬНЕ ЦЕНТРУВАННЯ: Третина екрана + 60 пікселів вниз */
+    /* ВИПРАВЛЕННЯ ЦЕНТРУВАННЯ: Зупиняємося значно раніше (на 250px від верху) */
     section { 
-      scroll-margin-top: calc(35vh + 60px) !important; 
+      scroll-margin-top: 250px; 
     }
 
     body {
@@ -89,7 +89,6 @@
       background: rgba(108,124,255,0.07); border: 1px solid rgba(108,124,255,0.25);
       font-size: 0.75rem; color: var(--accent); transition: all var(--t);
     }
-    .nav-cta:hover { background: rgba(108,124,255,0.15); border-color: var(--accent); }
 
     /* =============================================
        HERO
@@ -118,7 +117,7 @@
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.1; margin-bottom: 40px; }
 
     /* =============================================
-       SERVICES
+       SERVICES (2x2 Grid)
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; }
@@ -155,8 +154,8 @@
     /* =============================================
        CONTACT
     ============================================= */
-    /* ЗАПАС ХОДУ: 70% висоти екрана знизу, щоб все могло піднятися до центру */
-    #contact { padding-bottom: 70vh; } 
+    /* ВАЖЛИВО: Великий відступ знизу сайту, щоб форма могла піднятися вище до центру */
+    #contact { padding-bottom: 80vh; } 
 
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; transition: 0.3s; }
@@ -178,16 +177,38 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE ОПТИМІЗАЦІЯ */
+    @media (max-width: 1024px) {
+      .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+    
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
+      
+      /* Послуги 2х2 - зменшення елементів для балансу */
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .card { padding: 18px 12px; }
-      .card-title { font-size: 0.75rem; }
-      .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+      .card { padding: 20px 15px; }
+      .card-icon { width: 36px; height: 36px; font-size: 1.1rem; margin-bottom: 12px; }
+      .card-title { font-size: 0.78rem; margin-bottom: 8px; line-height: 1.2; }
+      .card-desc { font-size: 0.68rem; line-height: 1.4; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; }
+      .card-tag { font-size: 0.55rem; padding: 2px 6px; }
+      .card-number { font-size: 0.5rem; top: 12px; right: 12px; }
+      .card-footer { padding-top: 10px; }
+      
+      /* Про мене - мобільна адаптація */
+      .mission-panel { padding: 20px; gap: 15px; margin-bottom: 30px; }
+      .mission-main-text { font-size: 0.9rem; line-height: 1.6; }
+      .mission-title { margin-bottom: 10px; }
+      .section-title { margin-bottom: 25px; }
+      
       .form-row { grid-template-columns: 1fr; }
-      /* Мобільним скрол робимо трохи вище для зручності */
-      section { scroll-margin-top: 100px !important; }
+      .contact-form-box { padding: 25px; }
+      
+      .stat-card { padding: 25px; }
+      .stat-number { font-size: 2.2rem; }
+
+      /* Скрол для мобілки (робимо меншим, щоб не було великих дірок) */
+      section { scroll-margin-top: 100px; }
     }
   </style>
 </head>
@@ -263,19 +284,24 @@
         <p class="section-label reveal">Про мене</p>
         <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
         <div class="about-description reveal">
-          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на процеси.</p>
+          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
+          <p>Від скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
         </div>
         <div class="mission-panel reveal">
           <div class="mission-line"></div>
           <div class="mission-content">
             <span class="mission-title">Моя місія</span>
-            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Без переплат.</p>
+            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою. Без переплат.</p>
           </div>
+        </div>
+        <div class="about-stack reveal">
+          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">MySQL</span>
         </div>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Проєктів</div></div>
-        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація</div></div>
+        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
+        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
+        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Максимум на відповідь</div></div>
       </div>
     </div>
   </section>
@@ -299,11 +325,11 @@
           <div class="form-field">
             <label>Що потрібно?</label>
             <select name="service" required>
-                <option value="" disabled selected>Оберіть послугу...</option>
-                <option value="python">Python скрипти</option>
-                <option value="excel">Excel автоматизація</option>
-                <option value="scraping">Парсинг даних</option>
-                <option value="bot">Telegram бот</option>
+              <option value="" disabled selected>Оберіть послугу...</option>
+              <option value="python">Python скрипти</option>
+              <option value="excel">Excel автоматизація</option>
+              <option value="scraping">Парсинг даних</option>
+              <option value="bot">Telegram бот</option>
             </select>
           </div>
           <div class="form-field"><label>Опишіть задачу</label><textarea name="message" placeholder="Розкажіть детальніше..." required></textarea></div>
