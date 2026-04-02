@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Levik — IT-послуги для малого бізнесу</title>
+
+  <!-- Google Fonts: Unbounded (display) + Geologica (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS VARIABLES — кольори та шрифти
+    ============================================= */
+    :root {
+      --bg:          #0a0a0f;
+      --surface:     #111118;
+      --surface-2:   #18181f;
+      --border:      #2a2a38;
+      --accent:      #5b6ef7;
+      --accent-glow: rgba(91, 110, 247, 0.35);
+      --accent-soft: rgba(91, 110, 247, 0.08);
+      --text:        #e8e8f0;
+      --text-muted:  #7a7a96;
+      --text-dim:    #4a4a62;
+      --font-display: 'Unbounded', sans-serif;
+      --font-body:    'Geologica', sans-serif;
+      --radius:       14px;
+      --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* =============================================
+       RESET
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================
+       ФОНОВИЙ ШУМ (зерниста текстура)
+    ============================================= */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =============================================
+       НАВІГАЦІЯ
+    ============================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition);
+    }
+    nav.scrolled { border-color: var(--border); }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* =============================================
+       HERO — головний екран
+    ============================================= */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 5vw 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Декоративне коло-підсвітлення */
+    #hero::after {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -150px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(91,110,247,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: pulse 6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.08); }
+    }
+
+    .hero-inner {
+      max-width: 820px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--accent-soft);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(3rem, 9vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-name .accent-word {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--accent);
+    }
+
+    .hero-tagline {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 500px;
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      border: none;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+      box-shadow: 0 0 0 0 var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--accent-glow);
+      background: #6e7fff;
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    /* =============================================
+       ЗАГАЛЬНА СЕКЦІЯ — обгортка
+    ============================================= */
+    section {
+      padding: 100px 5vw;
+      position: relative;
+      z-index: 1;
+    }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin-bottom: 56px;
+    }
+
+    /* =============================================
+       ПОСЛУГИ — картки
+    ============================================= */
+    #services {
+      border-top: 1px solid var(--border);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: border-color var(--transition), transform var(--transition), background var(--transition);
+      cursor: default;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      background: var(--surface-2);
+      transform: translateY(-4px);
+    }
+    .card-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(91,110,247,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .card-tag {
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(91,110,247,0.15);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+    }
+
+    /* =============================================
+       ПРО МЕНЕ — секція "Про"
+    ============================================= */
+    #about {
+      border-top: 1px solid var(--border);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .about-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+    .stack-pill {
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .stack-pill:hover { border-color: var(--accent); color: var(--text); }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color var(--transition);
+    }
+    .stat-card:hover { border-color: var(--accent); }
+    .stat-number {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.4rem;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* =============================================
+       КОНТАКТ — секція Contact
+    ============================================= */
+    #contact {
+      border-top: 1px solid var(--border);
+    }
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) * 1.5);
+      padding: 56px 48px;
+      max-width: 680px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-box::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(91,110,247,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-box .section-label,
+    .contact-box .section-title { margin-bottom: 0; }
+    .contact-box .section-title { margin-bottom: 12px; }
+    .contact-intro {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+    }
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .contact-link:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    .contact-link-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-link-info { flex: 1; }
+    .contact-link-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+    }
+    .contact-link-value {
+      font-size: 0.9rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .contact-link-arrow { color: var(--text-dim); font-size: 1rem; }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       АНІМАЦІЇ ПОЯВИ
+    ============================================= */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* =============================================
+       МОБІЛЬНА АДАПТАЦІЯ
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+
+      #hero { padding-top: 100px; }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .contact-box {
+        padding: 36px 24px;
+      }
+
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       НАВІГАЦІЯ
+  ============================================= -->
+  <nav id="navbar">
+    <div class="nav-logo">Lev<span>ik</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">Послуги</a></li>
+      <li><a href="#about">Про мене</a></li>
+      <li><a href="#contact">Контакт</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- =============================================
+       HERO — головний екран
+  ============================================= -->
+  <section id="hero">
+    <div class="hero-inner">
+
+      <div class="hero-badge">Відкритий до замовлень</div>
+
+      <h1 class="hero-name">
+        Привіт,<br>
+        я <span class="accent-word">Levik</span>
+      </h1>
+
+      <p class="hero-tagline">
+        IT-послуги для малого бізнесу — швидко і без зайвого
+      </p>
+
+      <div class="hero-cta">
+        <a href="#services" class="btn-primary">
+          Що я роблю
+          <span>↓</span>
+        </a>
+        <a href="#contact" class="btn-secondary">
+          Написати мені
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       ПОСЛУГИ — 4 картки
+  ============================================= -->
+  <section id="services">
+
+    <p class="section-label reveal">Послуги</p>
+    <h2 class="section-title reveal">Що я можу зробити для тебе</h2>
+    <p class="section-sub reveal">Прості й корисні IT-рішення без зайвих слів і зайвих витрат.</p>
+
+    <div class="services-grid">
+
+      <!-- Картка 1: Python-скрипти -->
+      <div class="card reveal">
+        <div class="card-icon">🐍</div>
+        <div class="card-title">Python-скрипти</div>
+        <p class="card-desc">
+          Автоматизую рутинні задачі: обробка файлів, розсилки, сповіщення, інтеграції з API. Економить години щодня.
+        </p>
+        <span class="card-tag">Автоматизація</span>
+      </div>
+
+      <!-- Картка 2: Excel-автоматизація -->
+      <div class="card reveal">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Автоматизація Excel</div>
+        <p class="card-desc">
+          Макроси, формули, зведені таблиці. Перетворю ваш Excel-файл на інструмент, який працює сам.
+        </p>
+        <span class="card-tag">Excel / VBA</span>
+      </div>
+
+      <!-- Картка 3: Парсери даних -->
+      <div class="card reveal">
+        <div class="card-icon">🔎</div>
+        <div class="card-title">Парсери даних</div>
+        <p class="card-desc">
+          Збираю інформацію з сайтів: ціни, контакти, каталоги. Результат — зручний Excel або Google Sheet.
+        </p>
+        <span class="card-tag">Web Scraping</span>
+      </div>
+
+      <!-- Картка 4: Telegram-боти -->
+      <div class="card reveal">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Telegram-боти</div>
+        <p class="card-desc">
+          Боти для бізнесу: прийом замовлень, FAQ, сповіщення для команди. Запускаю швидко і недорого.
+        </p>
+        <span class="card-tag">Telegram API</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       ПРО МЕНЕ — секція About
+  ============================================= -->
+  <section id="about">
+
+    <div class="about-inner">
+
+      <div class="about-text">
+        <p class="section-label reveal">Про мене</p>
+        <h2 class="section-title reveal">Студент. Практик.<br>Вирішую задачі.</h2>
+
+        <p class="reveal">
+          Я — <strong>Levik</strong>, студент Львівської політехніки, напрям — комп'ютерні науки. Пройшов стажування в <strong>GlobalLogic Ukraine</strong>, де працював з вбудованими системами та цифровою інженерією.
+        </p>
+        <p class="reveal">
+          Моя ціль — допомогти малому бізнесу позбутися нудної ручної роботи за допомогою простих і надійних IT-рішень. <strong>Без переплат, без зайвих слів.</strong>
+        </p>
+
+        <div class="about-stack reveal">
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">JavaScript</span>
+          <span class="stack-pill">Excel / VBA</span>
+          <span class="stack-pill">BeautifulSoup</span>
+          <span class="stack-pill">Selenium</span>
+          <span class="stack-pill">aiogram</span>
+          <span class="stack-pill">Git / GitHub</span>
+          <span class="stack-pill">Kali Linux</span>
+        </div>
+      </div>
+
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">4+</div>
+          <div class="stat-label">Послуги, які я надаю</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">$0</div>
+          <div class="stat-label">Вартість консультації — завжди безкоштовно</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">Середній час відповіді на запит</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       КОНТАКТ — email + Telegram
+  ============================================= -->
+  <section id="contact">
+
+    <div class="contact-box">
+
+      <p class="section-label">Контакт</p>
+      <h2 class="section-title">Є задача? Пишіть.</h2>
+      <p class="contact-intro">
+        Опишіть що потрібно — відповім протягом дня. Перша консультація безкоштовна.
+      </p>
+
+      <div class="contact-links">
+
+        <!-- Email -->
+        <a href="mailto:your@email.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-info">
+            <div class="contact-link-label">Email</div>
+            <div class="contact-link-value">your@email.com</div>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+
+        <!-- Telegram -->
+        <a href="https://t.me/your_username" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">✈️</div>
+          <div class="contact-link-info">
+            <div class="contact-link-label">Telegram</div>
+            <div class="contact-link-value">@your_username</div>
+          </div>
+          <span class="contact-link-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="footer-logo">Lev<span>ik</span></div>
+    <p class="footer-copy">© 2025 Levik. Зроблено у Львові 🇺🇦</p>
+  </footer>
+
+
+  <!-- =============================================
+       JAVASCRIPT — логіка (navbar + scroll reveal)
+  ============================================= -->
+  <script>
+    // --- Navbar: додає клас .scrolled при прокрутці ---
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // --- Scroll Reveal: анімація появи елементів ---
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Невелика затримка для стагерного ефекту
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealElements.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
