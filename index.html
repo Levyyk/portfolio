@@ -12,9 +12,12 @@
       --bg:          #070710;
       --surface:     #0e0e1a;
       --surface-2:   #14141f;
+      --surface-3:   #1a1a28;
       --border:      #252535;
+      --border-light:#313148;
       --accent:      #6c7cff;
       --accent-2:    #a78bfa;
+      --accent-soft: rgba(108, 124, 255, 0.07);
       --text:        #eeeef5;
       --text-muted:  #7070a0;
       --text-dim:    #40405a;
@@ -23,14 +26,14 @@
       --font-body:   'Geologica', sans-serif;
       --radius:      14px;
       --radius-lg:   22px;
-      --t:           0.3s;
       --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+      --t:           0.3s;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* Відступ для якорів (щоб форма не ховалась під меню) */
+    /* Коректний відступ при переході по якорях */
     section { scroll-margin-top: 100px; }
 
     body {
@@ -42,7 +45,6 @@
       overflow-x: hidden;
     }
     
-    /* Загальне правило: без підкреслень */
     a { text-decoration: none !important; color: inherit; }
 
     /* Grain texture */
@@ -52,6 +54,7 @@
       pointer-events: none; z-index: 0;
     }
 
+    /* Ambient blobs */
     .blob {
       position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0;
       animation: blobFloat 12s ease-in-out infinite;
@@ -109,7 +112,7 @@
     .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
     /* =============================================
-       SECTIONS
+       SECTIONS COMMON
     ============================================= */
     section { padding: 100px 5vw; position: relative; z-index: 1; }
     .section-label { font-size: 0.68rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
@@ -117,93 +120,93 @@
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 50px; }
 
     /* =============================================
-       SERVICES (2x2 Grid)
+       SERVICES
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 34px 30px; transition: all var(--t) var(--ease); position: relative; }
-    .card:hover { border-color: #313148; background: var(--surface-2); transform: translateY(-5px); }
+    .card:hover { border-color: var(--border-light); background: var(--surface-2); transform: translateY(-5px); }
     .card-number { position: absolute; top: 24px; right: 24px; font-family: var(--font-display); font-size: 0.65rem; color: var(--text-dim); }
-    .card-icon { width: 50px; height: 50px; background: rgba(108,124,255,0.07); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
+    .card-icon { width: 50px; height: 50px; background: var(--accent-soft); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 16px; }
     .card-title { font-family: var(--font-display); font-size: 0.92rem; margin-bottom: 16px; }
-    .card-desc { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 20px; min-height: 80px; }
+    .card-desc { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 20px; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; }
-    .card-tag { padding: 4px 12px; border-radius: 100px; background: rgba(108,124,255,0.07); font-size: 0.68rem; color: var(--accent); }
-    .card-arrow { color: var(--text-dim); transition: all var(--t); }
-    .card:hover .card-arrow { color: var(--accent); transform: translate(3px, -3px); }
+    .card-tag { padding: 4px 12px; border-radius: 100px; background: var(--accent-soft); font-size: 0.68rem; color: var(--accent); }
 
     /* =============================================
-       ABOUT
+       ABOUT ME (NEW STYLE)
     ============================================= */
     .about-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 72px; align-items: start; }
     .about-description p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.8; }
     .about-description strong { color: #fff; font-weight: 500; }
-    
-    .mission-panel { 
-      display: flex; gap: 28px; background: var(--surface); border: 1px solid var(--border); 
-      padding: 45px; border-radius: var(--radius); margin-top: 50px; margin-bottom: 60px; 
-    }
-    .mission-line { width: 5px; background: #3b4cff; border-radius: 10px; flex-shrink: 0; }
-    .mission-title { font-family: var(--font-display); font-size: 0.8rem; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 20px; display: block; }
-    .mission-main-text { font-size: 1.15rem; line-height: 1.8; font-weight: 300; }
 
-    .about-stack { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+    .mission-card {
+      display: flex; gap: 24px; background: var(--surface-2); 
+      border-left: 4px solid var(--accent); padding: 32px; border-radius: var(--radius); 
+      margin-top: 40px; margin-bottom: 60px;
+    }
+    .mission-icon { font-size: 1.8rem; line-height: 1; }
+    .mission-label { font-family: var(--font-display); font-weight: 700; font-size: 0.8rem; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+    .mission-content p { font-size: 1.1rem; color: var(--text); line-height: 1.7; }
+
+    .about-stack { display: flex; flex-wrap: wrap; gap: 12px; }
     .stack-pill { padding: 7px 16px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-size: 0.8rem; color: var(--text-muted); transition: 0.3s; }
     .stack-pill:hover { border-color: var(--accent); color: #fff; }
 
     .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; margin-bottom: 20px; transition: 0.3s; }
-    .stat-card:hover { border-color: #313148; transform: translateY(-5px); }
-    .stat-number { font-family: var(--font-display); font-weight: 900; font-size: 3rem; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+    .stat-card:hover { border-color: var(--border-light); transform: translateX(5px); }
+    .stat-number { font-family: var(--font-display); font-weight: 900; font-size: 2.8rem; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
     .stat-label { font-size: 0.9rem; color: #fff; }
 
     /* =============================================
        CONTACT
     ============================================= */
-    #contact { padding-bottom: 120px; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 42px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 14px; transition: 0.3s; }
     .contact-link:hover { border-color: var(--accent); transform: translateX(5px); }
-    .contact-link-icon { width: 44px; height: 44px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 12px; font-size: 1.2rem; }
+    .contact-link-icon { font-size: 1.2rem; width: 44px; height: 44px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
     .contact-link-value { color: #fff; font-size: 0.95rem; font-weight: 500; }
 
-    .contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+    .contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; position: relative; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
     .form-field label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; }
-    .form-field input, .form-field textarea, .form-field select { background: var(--surface-2); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); color: #fff; font-family: inherit; transition: 0.3s; outline: none; }
+    .form-field input, .form-field textarea, .form-field select { background: var(--surface-2); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); color: #fff; font-family: inherit; font-size: 0.9rem; outline: none; transition: 0.3s; }
     .form-field input:focus, .form-field select:focus { border-color: var(--accent); }
     .form-field textarea { min-height: 120px; resize: none; }
 
-    /* Success Message */
-    .form-success { display: none; flex-direction: column; align-items: center; text-align: center; }
-    .form-success-icon { font-size: 3.5rem; margin-bottom: 20px; }
+    /* Custom Select */
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237070a0' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+
+    .form-success { display: none; text-align: center; flex-direction: column; align-items: center; padding: 20px 0; }
+    .form-success-icon { font-size: 3rem; margin-bottom: 16px; }
 
     /* BUTTONS */
-    .btn-primary { background: var(--accent); color: #fff; padding: 15px 32px; border-radius: var(--radius); border: none; font-weight: 500; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 24px rgba(108,124,255,0.3); }
-    .btn-ghost { border: 1px solid var(--border); padding: 15px 32px; border-radius: var(--radius); color: var(--text-muted); transition: 0.3s; }
+    .btn-primary { background: var(--accent); color: #fff; padding: 16px 32px; border-radius: var(--radius); border: none; font-weight: 500; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 24px rgba(108,124,255,0.3); font-family: inherit; }
+    .btn-ghost { border: 1px solid var(--border-light); padding: 16px 32px; border-radius: var(--radius); color: var(--text-muted); transition: 0.3s; }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(108,124,255,0.5); }
 
     /* FOOTER */
     footer { padding: 40px 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-dim); }
 
-    /* REVEAL */
+    /* ANIMATIONS */
     .reveal { opacity: 0; transform: translateY(26px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE (2x2 Сітка тут) */
+    /* RESPONSIVE */
     @media (max-width: 1024px) {
       .about-inner, .contact-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
       
-      /* ПОСЛУГИ 2х2 */
-      .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+      /* Послуги 2х2 на мобільних */
+      .services-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
       .card { padding: 22px 18px; }
       .card-desc { font-size: 0.75rem; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
       .card-number { font-size: 0.55rem; top: 12px; right: 12px; }
       .card-icon { width: 38px; height: 38px; font-size: 1.1rem; }
       .card-tag { font-size: 0.55rem; padding: 2px 8px; }
-      
+
       .form-row { grid-template-columns: 1fr; }
     }
   </style>
@@ -213,8 +216,9 @@
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
 
+  <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">Lev<span>ik</span></a>
+    <a href="#" class="nav-logo">Lev<span>ik</span></a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#services">Послуги</a></li>
@@ -225,6 +229,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-badge">
@@ -234,12 +239,13 @@
       <h1 class="hero-name">Привіт,<br>я <span class="outline">Levik</span></h1>
       <p class="hero-tagline">IT-послуги для малого бізнесу —<br><strong>швидко, чесно і без зайвого.</strong></p>
       <div class="hero-cta">
-        <a href="#contact" class="btn-primary">Обговорити проєкт <span>↓</span></a>
-        <a href="#services" class="btn-ghost">Що я роблю <span>→</span></a>
+        <a href="#services" class="btn-primary">Що я роблю <span>↓</span></a>
+        <a href="#contact" class="btn-ghost">Написати мені <span>→</span></a>
       </div>
     </div>
   </section>
 
+  <!-- SERVICES -->
   <section id="services">
     <div class="section-header">
       <p class="section-label reveal">Послуги</p>
@@ -251,65 +257,64 @@
         <div class="card-icon">🐍</div>
         <div class="card-title">Python-скрипти</div>
         <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, інтеграції з API.</p>
-        <div class="card-footer"><span class="card-tag">Автоматизація</span><span class="card-arrow">↗</span></div>
+        <div class="card-footer"><span class="card-tag">Автоматизація</span></div>
       </div>
       <div class="card reveal">
         <span class="card-number">02</span>
         <div class="card-icon">📊</div>
         <div class="card-title">Автоматизація Excel</div>
-        <p class="card-desc">Макроси, формули, зведені таблиці. Перетворю Excel на інструмент, що працює сам.</p>
-        <div class="card-footer"><span class="card-tag">Excel / VBA</span><span class="card-arrow">↗</span></div>
+        <p class="card-desc">Макроси, формули, зведені таблиці. Перетворю ваш Excel на інструмент, що працює сам.</p>
+        <div class="card-footer"><span class="card-tag">Excel / VBA</span></div>
       </div>
       <div class="card reveal">
         <span class="card-number">03</span>
         <div class="card-icon">🔎</div>
         <div class="card-title">Парсери даних</div>
         <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти, каталоги. Результат — зручний Excel.</p>
-        <div class="card-footer"><span class="card-tag">Scraping</span><span class="card-arrow">↗</span></div>
+        <div class="card-footer"><span class="card-tag">Scraping</span></div>
       </div>
       <div class="card reveal">
         <span class="card-number">04</span>
         <div class="card-icon">🤖</div>
         <div class="card-title">Telegram-боти</div>
-        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Швидко і недорого.</p>
-        <div class="card-footer"><span class="card-tag">API / Bots</span><span class="card-arrow">↗</span></div>
+        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Запускаю швидко і недорого.</p>
+        <div class="card-footer"><span class="card-tag">API / Bots</span></div>
       </div>
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section id="about">
     <div class="about-inner">
       <div class="about-text">
         <p class="section-label reveal">Про мене</p>
         <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
         <div class="about-description reveal">
-          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
-          <p>Від скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
+          <p>Привіт! Я — <strong>Levik</strong>, розробник-практик. Я не просто пишу код, а розумію, як працює малий бізнес зсередини, і з якими проблемами він стикається щодня.</p>
+          <p>Від створення скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
         </div>
-        <div class="mission-panel reveal">
-          <div class="mission-line"></div>
+        <div class="mission-card reveal">
+          <div class="mission-icon">🎯</div>
           <div class="mission-content">
-            <span class="mission-title">Моя місія</span>
-            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою. Без переплат і пафосу.</p>
+            <div class="mission-label">Моя місія</div>
+            <p>Забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки людською мовою. Ніяких переплат.</p>
           </div>
         </div>
         <div class="about-stack reveal">
-          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">Git</span>
         </div>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
-        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
-        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Максимум на відповідь</div></div>
+        <div class="stat-card"><div class="stat-number">4+</div><div class="stat-label">Робочих рішень для бізнесу</div></div>
+        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Перша консультація — безкоштовно</div></div>
+        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Середній час відповіді</div></div>
       </div>
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact">
-    <div class="section-header">
-      <p class="section-label reveal">Контакт</p>
-      <h2 class="section-title reveal">Є задача? Пишіть.</h2>
-    </div>
+    <div class="section-header"><p class="section-label reveal">Контакт</p><h2 class="section-title reveal">Є задача? Пишіть.</h2></div>
     <div class="contact-grid">
       <div class="contact-quick reveal">
         <a href="mailto:your@email.com" class="contact-link"><div class="contact-link-icon">✉️</div><div class="contact-link-value">your@email.com</div></a>
@@ -335,8 +340,7 @@
           <button type="submit" class="btn-primary">Надіслати <span>→</span></button>
         </form>
         <div class="form-success" id="form-success">
-          <div class="form-success-icon">✅</div>
-          <h3>Надіслано!</h3><p>Відповім протягом дня.</p>
+          <div class="form-success-icon">✅</div><h3>Надіслано!</h3><p>Відповім протягом дня.</p>
         </div>
       </div>
     </div>
@@ -368,7 +372,7 @@
                 try {
                     const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
                     if (res.ok) { form.style.display = 'none'; formSuccess.style.display = 'flex'; }
-                } catch { btn.innerHTML = 'Помилка ❌'; }
+                } catch { btn.innerHTML = 'Помилка ❌ Спробуйте ще'; }
             });
         }
     });
