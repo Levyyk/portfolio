@@ -30,9 +30,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* ВИПРАВЛЕННЯ ЦЕНТРУВАННЯ: Зупиняємося значно раніше (на 250px від верху) */
+    /* ЦЕНТРУВАННЯ ПРИ КЛІКУ: зупиняємо контент посередині екрана */
     section { 
-      scroll-margin-top: 250px; 
+      scroll-margin-top: 45vh; 
     }
 
     body {
@@ -44,6 +44,7 @@
       overflow-x: hidden;
     }
     
+    /* Прибираємо підкреслення */
     a { text-decoration: none !important; color: inherit; }
 
     /* Grain texture */
@@ -77,7 +78,7 @@
       transition: all var(--t);
     }
     nav.scrolled { background: rgba(7, 7, 16, 0.9); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; }
+    .nav-logo { font-family: var(--font-display); font-weight: 900; font-size: 1.1rem; cursor: pointer; }
     .nav-logo span { color: var(--accent); }
 
     .nav-right { display: flex; align-items: center; gap: 32px; }
@@ -91,7 +92,7 @@
     }
 
     /* =============================================
-       HERO
+       HERO (Без індикатора Scroll)
     ============================================= */
     #hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 5vw; position: relative; }
     .hero-inner { max-width: 900px; position: relative; z-index: 1; }
@@ -109,15 +110,15 @@
     .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 
     /* =============================================
-       SECTIONS COMMON
+       SECTIONS
     ============================================= */
-    section { padding: 40px 5vw 100px; position: relative; z-index: 1; }
+    section { position: relative; z-index: 1; padding: 20px 5vw 100px; }
     .section-label { font-size: 0.65rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.1; margin-bottom: 40px; }
 
     /* =============================================
-       SERVICES (2x2 Grid)
+       SERVICES
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; }
@@ -128,14 +129,13 @@
     .card-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 20px; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; }
     .card-tag { padding: 4px 10px; border-radius: 100px; background: rgba(108,124,255,0.07); font-size: 0.65rem; color: var(--accent); }
-    .card-arrow { color: var(--text-dim); font-size: 0.8rem; transition: all var(--t); }
+    .card-arrow { color: var(--text-dim); font-size: 0.8rem; }
 
     /* =============================================
        ABOUT
     ============================================= */
     .about-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: start; }
     .about-description p { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.7; }
-    
     .mission-panel { 
       display: flex; gap: 24px; background: var(--surface); border: 1px solid var(--border); 
       padding: 35px; border-radius: var(--radius); margin-top: 30px; margin-bottom: 50px; 
@@ -143,31 +143,27 @@
     .mission-line { width: 4px; background: #3b4cff; border-radius: 10px; flex-shrink: 0; }
     .mission-title { font-family: var(--font-display); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; font-weight: 700; margin-bottom: 16px; display: block; }
     .mission-main-text { font-size: 1.1rem; line-height: 1.7; font-weight: 300; }
-
     .about-stack { display: flex; flex-wrap: wrap; gap: 10px; }
-    .stack-pill { padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-size: 0.75rem; color: var(--text-muted); transition: 0.3s; }
-
-    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; margin-bottom: 16px; transition: 0.3s; }
+    .stack-pill { padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); font-size: 0.75rem; color: var(--text-muted); }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; margin-bottom: 16px; }
     .stat-number { font-family: var(--font-display); font-weight: 900; font-size: 2.6rem; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; }
     .stat-label { font-size: 0.85rem; color: #fff; }
 
     /* =============================================
-       CONTACT
+       CONTACT (Із запасом ходу)
     ============================================= */
-    /* ВАЖЛИВО: Великий відступ знизу сайту, щоб форма могла піднятися вище до центру */
-    #contact { padding-bottom: 80vh; } 
-
+    #contact { 
+      padding-bottom: 100vh; /* ГАРАНТІЯ ЦЕНТРУВАННЯ: дозволяє скролити далі ніж зазвичай */
+    } 
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
-    .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; transition: 0.3s; }
+    .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
     .contact-link-value { color: #fff; font-size: 0.9rem; font-weight: 500; }
-
     .contact-form-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
     .form-field label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; }
-    .form-field input, .form-field textarea, .form-field select { background: var(--surface-2); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); color: #fff; font-family: inherit; transition: 0.3s; outline: none; }
-    .form-field input:focus, .form-field select:focus { border-color: var(--accent); }
+    .form-field input, .form-field textarea, .form-field select { background: var(--surface-2); border: 1px solid var(--border); padding: 14px; border-radius: var(--radius); color: #fff; font-family: inherit; outline: none; }
     .form-field textarea { min-height: 100px; resize: none; }
 
     /* FOOTER */
@@ -177,37 +173,17 @@
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE ОПТИМІЗАЦІЯ */
+    /* RESPONSIVE */
     @media (max-width: 1024px) {
       .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
     }
-    
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
-      
-      /* Послуги 2х2 - зменшення елементів для балансу */
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .card { padding: 20px 15px; }
-      .card-icon { width: 36px; height: 36px; font-size: 1.1rem; margin-bottom: 12px; }
-      .card-title { font-size: 0.78rem; margin-bottom: 8px; line-height: 1.2; }
-      .card-desc { font-size: 0.68rem; line-height: 1.4; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px; }
-      .card-tag { font-size: 0.55rem; padding: 2px 6px; }
-      .card-number { font-size: 0.5rem; top: 12px; right: 12px; }
-      .card-footer { padding-top: 10px; }
-      
-      /* Про мене - мобільна адаптація */
-      .mission-panel { padding: 20px; gap: 15px; margin-bottom: 30px; }
-      .mission-main-text { font-size: 0.9rem; line-height: 1.6; }
-      .mission-title { margin-bottom: 10px; }
-      .section-title { margin-bottom: 25px; }
-      
+      .card { padding: 18px 12px; }
+      .card-title { font-size: 0.75rem; }
+      .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
       .form-row { grid-template-columns: 1fr; }
-      .contact-form-box { padding: 25px; }
-      
-      .stat-card { padding: 25px; }
-      .stat-number { font-size: 2.2rem; }
-
-      /* Скрол для мобілки (робимо меншим, щоб не було великих дірок) */
       section { scroll-margin-top: 100px; }
     }
   </style>
@@ -285,23 +261,21 @@
         <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
         <div class="about-description reveal">
           <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
-          <p>Від скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
         </div>
         <div class="mission-panel reveal">
           <div class="mission-line"></div>
           <div class="mission-content">
             <span class="mission-title">Моя місія</span>
-            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою. Без переплат.</p>
+            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою.</p>
           </div>
         </div>
         <div class="about-stack reveal">
-          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">MySQL</span>
         </div>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
-        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
-        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Максимум на відповідь</div></div>
+        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Проєктів</div></div>
+        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація</div></div>
       </div>
     </div>
   </section>
@@ -325,11 +299,11 @@
           <div class="form-field">
             <label>Що потрібно?</label>
             <select name="service" required>
-              <option value="" disabled selected>Оберіть послугу...</option>
-              <option value="python">Python скрипти</option>
-              <option value="excel">Excel автоматизація</option>
-              <option value="scraping">Парсинг даних</option>
-              <option value="bot">Telegram бот</option>
+                <option value="" disabled selected>Оберіть послугу...</option>
+                <option value="python">Python скрипти</option>
+                <option value="excel">Excel автоматизація</option>
+                <option value="scraping">Парсинг даних</option>
+                <option value="bot">Telegram бот</option>
             </select>
           </div>
           <div class="form-field"><label>Опишіть задачу</label><textarea name="message" placeholder="Розкажіть детальніше..." required></textarea></div>
