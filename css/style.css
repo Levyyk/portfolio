@@ -86,7 +86,18 @@ section { padding: 100px 5vw; border-top: 1px solid var(--border); position: rel
 .about-description p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.8; }
 .about-description strong { color: #fff; font-weight: 500; }
 
-.mission-panel { display: flex; gap: 24px; background: var(--surface); border: 1px solid var(--border); padding: 40px; border-radius: var(--radius); margin: 40px 0; }
+.mission-panel {
+  display: flex;
+  gap: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 40px;
+  border-radius: var(--radius);
+  
+  /* Змінюємо тут: */
+  margin-top: 40px;    /* відступ зверху залишився 40px */
+  margin-bottom: 60px; /* ЗБІЛЬШЕНО відступ знизу до навичок (було 40px) */
+}
 .mission-line { width: 5px; background: #3b4cff; border-radius: 10px; flex-shrink: 0; }
 .mission-title { font-family: var(--font-display); font-size: 0.75rem; color: var(--accent); text-transform: uppercase; display: block; margin-bottom: 12px; }
 .mission-main-text { font-size: 1.3rem; line-height: 1.5; font-weight: 300; }
