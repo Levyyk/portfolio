@@ -30,9 +30,9 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     
-    /* ІДЕАЛЬНЕ ЦЕНТРУВАННЯ: 25% висоти екрана + додаткові 60 пікселів */
+    /* ГОЛОВНЕ ВИПРАВЛЕННЯ: Скрол тепер зупиняє заголовок посередині екрана ноутбука */
     section { 
-      scroll-margin-top: calc(25vh + 60px); 
+      scroll-margin-top: 35vh !important; 
     }
 
     body {
@@ -111,13 +111,13 @@
     /* =============================================
        SECTIONS COMMON
     ============================================= */
-    section { padding: 40px 5vw 100px; position: relative; z-index: 1; }
+    section { padding: 40px 5vw 120px; position: relative; z-index: 1; }
     .section-label { font-size: 0.65rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .section-label::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.8rem); line-height: 1.1; margin-bottom: 40px; }
 
     /* =============================================
-       SERVICES
+       SERVICES (2x2 Grid)
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; }
@@ -154,9 +154,7 @@
     /* =============================================
        CONTACT
     ============================================= */
-    /* ЗАПАС ХОДУ: Великий відступ знизу, щоб форма могла піднятися до центру */
     #contact { padding-bottom: 60vh; } 
-
     .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
     .contact-link { display: flex; align-items: center; gap: 16px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; transition: 0.3s; }
     .contact-link-icon { width: 40px; height: 40px; background: rgba(108,124,255,0.07); display: flex; align-items: center; justify-content: center; border-radius: 10px; }
@@ -173,28 +171,24 @@
     /* FOOTER */
     footer { padding: 40px 5vw; background: var(--bg); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
 
-    /* REVEAL */
+    /* REVEAL ANIMATION */
     .reveal { opacity: 0; transform: translateY(20px); transition: 0.8s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* RESPONSIVE (2x2 Grid + Mobile Optimization) */
+    /* RESPONSIVE (Сітка 2х2 + мобільні шрифти) */
     @media (max-width: 1024px) {
       .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+      section { scroll-margin-top: 20vh !important; }
     }
     
     @media (max-width: 768px) {
       .nav-links, .nav-cta { display: none; }
-      
-      /* Послуги 2х2 */
       .services-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .card { padding: 18px 12px; }
       .card-title { font-size: 0.75rem; }
       .card-desc { font-size: 0.65rem; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
-      
       .form-row { grid-template-columns: 1fr; }
-      
-      /* На мобілках скрол робимо трохи вище, щоб заголовок був ближче до верху */
-      section { scroll-margin-top: 100px; }
+      section { scroll-margin-top: 10vh !important; }
     }
   </style>
 </head>
@@ -204,7 +198,6 @@
   <div class="blob blob-2"></div>
 
   <nav id="navbar">
-    <!-- Повернення на самий верх (Hero) -->
     <a href="#hero" class="nav-logo">Lev<span>ik</span></a>
     <div class="nav-right">
       <ul class="nav-links">
@@ -216,7 +209,6 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-badge"><span class="hero-badge-dot"></span>Відкритий до замовлень</div>
@@ -229,7 +221,6 @@
     </div>
   </section>
 
-  <!-- SERVICES -->
   <section id="services">
     <div class="section-header">
       <p class="section-label reveal">Послуги</p>
@@ -267,36 +258,33 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="about-inner">
       <div class="about-text">
         <p class="section-label reveal">Про мене</p>
         <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
         <div class="about-description reveal">
-          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
-          <p>Від скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
+          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на процеси.</p>
         </div>
         <div class="mission-panel reveal">
           <div class="mission-line"></div>
           <div class="mission-content">
             <span class="mission-title">Моя місія</span>
-            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою. Без переплат і пафосу.</p>
+            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Без переплат.</p>
           </div>
         </div>
         <div class="about-stack reveal">
-          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">MySQL</span>
+          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">MySQL</span>
         </div>
       </div>
       <div class="about-stats reveal">
-        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
-        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
-        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Максимум на відповідь</div></div>
+        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Проєктів</div></div>
+        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація</div></div>
+        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Відповідь</div></div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-header">
       <p class="section-label reveal">Контакт</p>
@@ -338,7 +326,6 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Reveal logic
         const revealEls = document.querySelectorAll('.reveal');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -350,11 +337,9 @@
         }, { threshold: 0.1 });
         revealEls.forEach(el => observer.observe(el));
 
-        // Nav logic
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
 
-        // AJAX Form
         const form = document.getElementById('contact-form'), formSuccess = document.getElementById('form-success');
         if (form) {
             form.addEventListener('submit', async (e) => {
