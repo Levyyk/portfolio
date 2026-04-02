@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet" />
 
-  <!-- ПІДКЛЮЧЕННЯ ВАШОГО CSS ФАЙЛУ -->
+  <!-- Стилі -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -113,39 +113,52 @@
     </div>
   </section>
 
-  <!-- ПРО МЕНЕ -->
+  <!-- ПРО МЕНЕ (НОВИЙ СТИЛЬ) -->
   <section id="about">
     <div class="about-inner">
       <div class="about-text">
         <p class="section-label reveal">Про мене</p>
-        <h2 class="section-title reveal">Студент. Практик.<br>Вирішую задачі.</h2>
+        <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
 
-        <p class="reveal">
-          Я — <strong>Levik</strong>, студент Львівської політехніки, напрям — комп'ютерні науки. Пройшов стажування в <strong>GlobalLogic Ukraine</strong>.
-        </p>
+        <div class="about-description reveal">
+          <p>
+            Привіт! Я — <strong>Levik</strong>, розробник-практик. Я не просто пишу код, а розумію, як працює малий бізнес зсередини, і з якими проблемами він стикається щодня.
+          </p>
+          <p>
+            Від створення скриптів на Python та налаштування баз даних до роботи з вбудованими системами — я шукаю інструменти, які дійсно приносять користь.
+          </p>
+        </div>
 
-        <div class="experience-line reveal">
-          <div class="exp-company">GlobalLogic Ukraine</div>
-          <div class="exp-role">· В 4цбудовані системи</div>
+        <div class="mission-card reveal">
+          <div class="mission-icon">🎯</div>
+          <div class="mission-content">
+            <div class="mission-label">Моя місія</div>
+            <p>Забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки людською мовою. Ніяких переплат і зайвого пафосу.</p>
+          </div>
         </div>
 
         <div class="about-stack reveal">
           <span class="stack-pill">Python</span>
           <span class="stack-pill">JavaScript</span>
           <span class="stack-pill">Excel / VBA</span>
-          <span class="stack-pill">BeautifulSoup</span>
-          <span class="stack-pill">Git</span>
+          <span class="stack-pill">Scraping</span>
+          <span class="stack-pill">Embedded Systems</span>
+          <span class="stack-pill">Git / GitHub</span>
         </div>
       </div>
 
       <div class="about-stats reveal">
         <div class="stat-card">
           <div class="stat-number">4+</div>
-          <div class="stat-label">Послуги, які я надаю</div>
+          <div class="stat-label">Робочих IT-рішень для малого бізнесу</div>
         </div>
         <div class="stat-card">
           <div class="stat-number">$0</div>
-          <div class="stat-label">Консультація — безкоштовно</div>
+          <div class="stat-label">Перша консультація — завжди безкоштовно</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">Середній час відповіді на запит</div>
         </div>
       </div>
     </div>
@@ -190,10 +203,24 @@
               <input type="email" id="email" name="email" placeholder="ivan@example.com" required />
             </div>
           </div>
+
+          <div class="form-field">
+            <label for="service">Що потрібно?</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Оберіть послугу...</option>
+              <option value="python">Python-скрипти</option>
+              <option value="excel">Автоматизація Excel</option>
+              <option value="parser">Парсер даних (Scraping)</option>
+              <option value="telegram">Telegram-боти</option>
+              <option value="other">Інше / Консультація</option>
+            </select>
+          </div>
+
           <div class="form-field">
             <label for="message">Опишіть задачу</label>
             <textarea id="message" name="message" placeholder="Розкажіть детальніше..." required></textarea>
           </div>
+
           <div class="form-submit-row">
             <button type="submit" class="btn-primary">Надіслати <span>→</span></button>
           </div>
@@ -201,6 +228,7 @@
         <div class="form-success" id="form-success">
           <div class="form-success-icon">✅</div>
           <h3>Повідомлення надіслано!</h3>
+          <p>Дякую за звернення — відповім протягом дня.</p>
         </div>
       </div>
     </div>
@@ -212,7 +240,7 @@
     <p class="footer-copy">© 2025 Levik. Зроблено у Львові 🇺🇦</p>
   </footer>
 
-  <!-- СКРИПТИ -->
+  <!-- Скрипти -->
   <script src="js/main.js"></script>
 
 </body>
