@@ -240,4 +240,133 @@
         <span class="card-number">01</span>
         <div class="card-icon">🐍</div>
         <div class="card-title">Python-скрипти</div>
-        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів,
+        <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, інтеграції з API.</p>
+        <div class="card-footer"><span class="card-tag">Автоматизація</span><span class="card-arrow">↗</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="card-number">02</span>
+        <div class="card-icon">📊</div>
+        <div class="card-title">Автоматизація Excel</div>
+        <p class="card-desc">Макроси, формули. Перетворю Excel на інструмент, що працює сам.</p>
+        <div class="card-footer"><span class="card-tag">Excel / VBA</span><span class="card-arrow">↗</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="card-number">03</span>
+        <div class="card-icon">🔎</div>
+        <div class="card-title">Парсери даних</div>
+        <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти. Результат — зручний Excel.</p>
+        <div class="card-footer"><span class="card-tag">Scraping</span><span class="card-arrow">↗</span></div>
+      </div>
+      <div class="card reveal">
+        <span class="card-number">04</span>
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Telegram-боти</div>
+        <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Швидко і недорого.</p>
+        <div class="card-footer"><span class="card-tag">API / Bots</span><span class="card-arrow">↗</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <p class="section-label reveal">Про мене</p>
+        <h2 class="section-title reveal">Менше рутини.<br>Більше результату.</h2>
+        <div class="about-description reveal">
+          <p>Привіт! Я — <strong>Levik, розробник-практик.</strong> Я розумію, як працює малий бізнес зсередини. Мій підхід — це інженерний погляд на ваші процеси.</p>
+          <p>Від скриптів на Python до налаштування баз даних — я шукаю інструменти, які дійсно приносять користь.</p>
+        </div>
+        <div class="mission-panel reveal">
+          <div class="mission-line"></div>
+          <div class="mission-content">
+            <span class="mission-title">Моя місія</span>
+            <p class="mission-main-text">Моя ціль — забрати у вас нудну ручну роботу і замінити її надійним ІТ-рішенням. Пояснюю складні штуки простою мовою. Без переплат і пафосу.</p>
+          </div>
+        </div>
+        <div class="about-stack reveal">
+          <span class="stack-pill">Python</span><span class="stack-pill">JavaScript</span><span class="stack-pill">Excel / VBA</span><span class="stack-pill">Scraping</span><span class="stack-pill">Embedded Systems</span><span class="stack-pill">MySQL</span>
+        </div>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card"><div class="stat-number">12+</div><div class="stat-label">Бізнес-проєктів</div></div>
+        <div class="stat-card"><div class="stat-number">$0</div><div class="stat-label">Консультація — безкоштовно</div></div>
+        <div class="stat-card"><div class="stat-number">24h</div><div class="stat-label">Максимум на відповідь</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <p class="section-label reveal">Контакт</p>
+      <h2 class="section-title reveal">Є задача? Пишіть.</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-quick reveal">
+        <a href="mailto:your@email.com" class="contact-link"><div class="contact-link-icon">✉️</div><div class="contact-link-value">your@email.com</div></a>
+        <a href="https://t.me/your_username" target="_blank" class="contact-link"><div class="contact-link-icon">✈️</div><div class="contact-link-value">@your_username</div></a>
+      </div>
+      <div class="contact-form-box reveal">
+        <form id="contact-form" action="https://formspree.io/f/mjgperkg" method="POST">
+          <div class="form-row">
+            <div class="form-field"><label>Ваше ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
+            <div class="form-field"><label>Email</label><input type="email" name="email" placeholder="ivan@example.com" required></div>
+          </div>
+          <div class="form-field">
+            <label>Що потрібно?</label>
+            <select name="service" required>
+                <option value="" disabled selected>Оберіть послугу...</option>
+                <option value="python">Python скрипти</option>
+                <option value="excel">Excel автоматизація</option>
+                <option value="scraping">Парсинг даних</option>
+                <option value="bot">Telegram бот</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Опишіть задачу</label><textarea name="message" placeholder="Розкажіть детальніше..." required></textarea></div>
+          <button type="submit" class="btn-primary">Надіслати <span>→</span></button>
+        </form>
+        <div id="form-success" style="display:none; text-align:center;">
+          <div style="font-size:3rem; margin-bottom:20px;">✅</div>
+          <h3>Надіслано!</h3><p>Відповім протягом дня.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="footer-logo">Lev<span>ik</span></div><p>© 2025 Levik. Зроблено у Львові 🇺🇦</p></footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Reveal logic
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), 50);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => observer.observe(el));
+
+        // Nav logic
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+        // AJAX Form
+        const form = document.getElementById('contact-form'), formSuccess = document.getElementById('form-success');
+        if (form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button'); btn.innerHTML = 'Надсилаємо...';
+                try {
+                    const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+                    if (res.ok) { form.style.display = 'none'; formSuccess.style.display = 'block'; }
+                } catch { btn.innerHTML = 'Помилка ❌'; }
+            });
+        }
+    });
+  </script>
+</body>
+</html>
