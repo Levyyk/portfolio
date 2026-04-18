@@ -1,0 +1,1113 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Генератор накладних — Levik</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Geologica:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #070710;
+        --surface: #0e0e1a;
+        --surface-2: #14141f;
+        --border: #252535;
+        --accent: #6c7cff;
+        --accent-2: #a78bfa;
+        --text: #eeeef5;
+        --text-muted: #7070a0;
+        --text-dim: #40405a;
+        --green: #34d399;
+        --font-display: "Unbounded", sans-serif;
+        --font-body: "Geologica", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --radius: 14px;
+        --radius-lg: 22px;
+        --t: 0.3s;
+        --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-weight: 300;
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+      a {
+        text-decoration: none !important;
+        color: inherit;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+      .blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        pointer-events: none;
+        z-index: 0;
+        animation: blobFloat 12s ease-in-out infinite;
+      }
+      .blob-1 {
+        width: 500px;
+        height: 500px;
+        top: -200px;
+        right: -100px;
+        background: radial-gradient(
+          circle,
+          rgba(108, 124, 255, 0.12),
+          transparent 70%
+        );
+      }
+      .blob-2 {
+        width: 400px;
+        height: 400px;
+        bottom: 20%;
+        left: -150px;
+        background: radial-gradient(
+          circle,
+          rgba(167, 139, 250, 0.08),
+          transparent 70%
+        );
+        animation-delay: -6s;
+      }
+      @keyframes blobFloat {
+        0%,
+        100% {
+          transform: scale(1) translate(0, 0);
+        }
+        33% {
+          transform: scale(1.05) translate(20px, -30px);
+        }
+        66% {
+          transform: scale(0.97) translate(-15px, 20px);
+        }
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0 5vw;
+        height: 68px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(7, 7, 16, 0.7);
+        backdrop-filter: blur(24px);
+        transition: all var(--t);
+      }
+      nav.scrolled {
+        background: rgba(7, 7, 16, 0.9);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        font-family: var(--font-display);
+        font-weight: 900;
+        font-size: 1.1rem;
+      }
+      .nav-logo span {
+        color: var(--accent);
+      }
+      .nav-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        padding: 8px 18px;
+        transition: all var(--t);
+      }
+      .nav-back:hover {
+        color: var(--text);
+        border-color: var(--text-muted);
+      }
+
+      /* LAYOUT */
+      .page-wrapper {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 120px 5vw 80px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* HERO BLOCK */
+      .project-hero {
+        margin-bottom: 80px;
+      }
+      .back-crumb {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 32px;
+      }
+      .back-crumb span {
+        color: var(--accent);
+      }
+
+      .project-meta-top {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .project-num {
+        font-family: var(--font-display);
+        font-size: 0.6rem;
+        color: var(--text-dim);
+        border: 1px solid var(--border);
+        padding: 4px 10px;
+        border-radius: 100px;
+      }
+      .project-tag {
+        padding: 4px 12px;
+        border-radius: 100px;
+        background: rgba(108, 124, 255, 0.07);
+        font-size: 0.65rem;
+        color: var(--accent);
+        border: 1px solid rgba(108, 124, 255, 0.15);
+      }
+
+      .project-title {
+        font-family: var(--font-display);
+        font-weight: 900;
+        font-size: clamp(2rem, 6vw, 4rem);
+        line-height: 1;
+        margin-bottom: 24px;
+      }
+      .project-title .outline {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--accent);
+      }
+      .project-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin-bottom: 40px;
+        line-height: 1.7;
+      }
+
+      .project-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+      }
+      .btn-primary,
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 26px;
+        border-radius: 100px;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition: all var(--t) var(--ease);
+        cursor: pointer;
+        border: none;
+        outline: none;
+        font-family: inherit;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 4px 15px rgba(108, 124, 255, 0.25);
+      }
+      .btn-primary:hover {
+        background: #5a6ae6;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 124, 255, 0.4);
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--text-muted);
+      }
+
+      /* HERO SCREENSHOT CONTAINER */
+      .hero-screenshot {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 120px;
+        position: relative;
+      }
+      .screenshot-container {
+        padding: 2.5vw;
+        background: var(--surface-2);
+        border-radius: var(--radius-lg);
+        display: flex;
+        justify-content: center;
+        position: relative;
+        border: 1px solid var(--border);
+        max-width: 900px; /* Keep it nicely sized */
+        width: 100%;
+        margin: 0 auto;
+      }
+      .screenshot-container img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        position: relative;
+        z-index: 2;
+      }
+      .screenshot-caption-small {
+        position: absolute;
+        bottom: -36px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        white-space: nowrap;
+      }
+      
+      /* FAQ ACCORDION */
+      .faq-block {
+        margin-top: 100px; 
+        margin-bottom: 100px;
+      }
+      .faq-details {
+        border-bottom: 1px solid var(--border);
+        background: transparent;
+      }
+      .faq-details[open] {
+        padding-bottom: 24px;
+      }
+      .faq-summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 32px 0;
+        font-family: var(--font-main);
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--text-main);
+        cursor: pointer;
+        list-style: none; /* Hide default arrow */
+        transition: color var(--t) var(--ease);
+      }
+      .faq-summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-summary:hover {
+        color: var(--accent);
+      }
+      .faq-icon {
+        font-size: 1.2rem;
+        font-weight: 300;
+        color: var(--accent);
+        display: inline-block;
+        transition: transform var(--t) var(--ease);
+      }
+      .faq-details[open] .faq-summary {
+        color: var(--accent);
+        padding-bottom: 16px;
+      }
+      .faq-details[open] .faq-icon {
+        transform: rotate(45deg);
+      }
+      .faq-content {
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-size: 0.95rem;
+        padding-right: 40px;
+        animation: fadeIn 0.1s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-3px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* STATS ROW */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 80px;
+      }
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        text-align: center;
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-weight: 900;
+        font-size: 2rem;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 6px;
+      }
+      .stat-lbl {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      /* SECTION LABEL */
+      .section-label {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        color: var(--accent);
+        letter-spacing: 0.16em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+      .section-label::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: var(--accent);
+      }
+      .section-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        line-height: 1.2;
+        margin-bottom: 32px;
+      }
+
+      /* DESCRIPTION BLOCK */
+      .description-block {
+        margin-bottom: 80px;
+      }
+      .description-grid {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr; /* Image right, text left */
+        gap: 60px;
+        align-items: center;
+      }
+      @media (max-width: 900px) {
+        .description-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .desc-text p {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-bottom: 18px;
+        line-height: 1.8;
+      }
+      .desc-text strong {
+        color: var(--text);
+      }
+
+      .features-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .features-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+      .feat-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: rgba(108, 124, 255, 0.07);
+        border: 1px solid rgba(108, 124, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .feat-text strong {
+        color: var(--text);
+        display: block;
+        font-size: 0.85rem;
+        margin-bottom: 2px;
+      }
+
+      /* STACK PILLS */
+      .stack-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 28px;
+        margin-top: 24px;
+      }
+      .stack-label {
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 16px;
+        display: block;
+      }
+      .stack-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .pill {
+        padding: 6px 14px;
+        border-radius: 100px;
+        border: 1px solid var(--border);
+        background: var(--surface-2);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-family: var(--font-mono);
+      }
+
+      /* SCREENSHOTS GALLERY */
+      .gallery-block {
+        margin-bottom: 80px;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .gallery-item {
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        overflow: hidden;
+        background: var(--surface);
+        transition:
+          border-color var(--t),
+          transform var(--t);
+        cursor: pointer;
+      }
+      .gallery-item:hover {
+        border-color: rgba(108, 124, 255, 0.3);
+        transform: translateY(-3px);
+      }
+      .gallery-item img {
+        width: 100%;
+        display: block;
+      }
+      .gallery-caption {
+        padding: 12px 16px;
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        border-top: 1px solid var(--border);
+      }
+
+      /* HOW IT WORKS */
+      .how-block {
+        margin-bottom: 80px;
+      }
+      .steps {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 60px 1fr;
+        gap: 24px;
+        align-items: start;
+        position: relative;
+      }
+      .step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        left: 29px;
+        top: 52px;
+        bottom: -20px;
+        width: 1px;
+        background: var(--border);
+      }
+      .step-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-display);
+        font-size: 0.65rem;
+        color: var(--accent);
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+      .step-content {
+        padding-bottom: 36px;
+      }
+      .step-title {
+        font-family: var(--font-display);
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+      }
+      .step-desc {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      /* CODE SNIPPET */
+      .code-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-bottom: 80px;
+      }
+      .code-header {
+        background: var(--surface-2);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+      }
+      .code-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .code-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .code-dots span:nth-child(1) {
+        background: #ff5f56;
+      }
+      .code-dots span:nth-child(2) {
+        background: #ffbd2e;
+      }
+      .code-dots span:nth-child(3) {
+        background: #27c93f;
+      }
+      .code-file {
+        flex: 1;
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-left: -40px;
+      }
+      .code-body {
+        padding: 28px;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        line-height: 1.7;
+        overflow-x: auto;
+      }
+      .code-body pre {
+        margin: 0;
+      }
+      .kw {
+        color: #ff7b72;
+      }
+      .cl {
+        color: #d2a8ff;
+      }
+      .sl {
+        color: #79c0ff;
+      }
+      .st {
+        color: #a5d6ff;
+      }
+      .cm {
+        color: #8b949e;
+        font-style: italic;
+      }
+      .nm {
+        color: #ffa657;
+      }
+
+      /* CTA BOTTOM */
+      .cta-block {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 48px;
+        text-align: center;
+      }
+      .cta-block h3 {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+      }
+      .cta-block p {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        margin-bottom: 28px;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 40px 5vw;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        position: relative;
+        z-index: 1;
+      }
+      .footer-logo {
+        font-family: var(--font-display);
+        font-weight: 900;
+      }
+      .footer-logo span {
+        color: var(--accent);
+      }
+
+      /* REVEAL */
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: 0.8s var(--ease);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* LIGHTBOX */
+      .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: rgba(7, 7, 16, 0.95);
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+      }
+      .lightbox.active {
+        display: flex;
+      }
+      .lightbox img {
+        max-width: 90vw;
+        max-height: 85vh;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 24px;
+        right: 32px;
+        font-size: 2rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        line-height: 1;
+        transition: color var(--t);
+      }
+      .lightbox-close:hover {
+        color: var(--text);
+      }
+
+      @media (max-width: 768px) {
+        .description-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats-row {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .project-title {
+          font-size: 2rem;
+        }
+        .cta-block {
+          padding: 28px 20px;
+        }
+        .step {
+          grid-template-columns: 48px 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- NAV -->
+    <nav id="navbar">
+      <a href="index.html" class="nav-logo">Lev<span>ik</span></a>
+      <a href="index.html#services" class="nav-back">← Назад до послуг</a>
+    </nav>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-close" id="lb-close">&times;</span>
+      <img id="lb-img" src="" alt="" />
+    </div>
+
+    <div class="page-wrapper">
+      <!-- PROJECT HERO -->
+      <div class="project-hero">
+        <div class="back-crumb">
+          Levik / <span>Проєкти</span> / Генератор накладних
+        </div>
+
+        <div class="project-meta-top">
+          <span class="project-num">02</span>
+          <span class="project-tag">Excel / Python</span>
+          <span class="project-tag">Автоматизація</span>
+          <span class="project-tag">Desktop App</span>
+        </div>
+
+        <h1 class="project-title">
+          Генератор<br /><span class="outline">накладних</span>
+        </h1>
+        <p class="project-subtitle">
+          Десктопний застосунок, що автоматично створює індивідуальні
+          Excel-накладні для кожного клієнта з єдиного зведеного файлу. Замість
+          години ручної роботи — один клік.
+        </p>
+
+        <div class="project-actions">
+          <a
+            href="https://github.com/Levyyk/portfolio"
+            target="_blank"
+            class="btn-primary"
+            >Переглянути на GitHub →</a
+          >
+          <a href="index.html#contact" class="btn-ghost">Замовити схоже</a>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row reveal">
+        <div class="stat-card">
+          <div class="stat-num">1000+</div>
+          <div class="stat-lbl">Накладних за один запуск</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">&lt; 5с</div>
+          <div class="stat-lbl">Час генерації всього пакету</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">0</div>
+          <div class="stat-lbl">Ручної роботи після налаштування</div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="description-block">
+        <p class="section-label reveal">Про проєкт</p>
+        <h2 class="section-title reveal">Що робить цей застосунок</h2>
+        <div class="description-grid">
+          <div class="desc-text reveal">
+            <p>
+              Клієнт щодня заповнював один зведений Excel-файл з продажами.
+              Потім вручну копіював дані кожного клієнта в окремий документ,
+              форматував, додавав підписи — і так для кожного з 9+ клієнтів.
+            </p>
+            <p>
+              Цей застосунок <strong>читає зведений файл</strong>, автоматично
+              визначає всіх клієнтів, формує індивідуальну накладну з
+              правильними формулами, форматом валюти і підписами — і зберігає
+              кожну в окрему папку.
+            </p>
+            <p>
+              Результат:
+              <strong>один клік замість години ручної роботи.</strong>
+            </p>
+          </div>
+          
+          <div class="reveal">
+            <div class="screenshot-container" style="padding: 1.5vw; background: var(--surface-2); border-radius: var(--radius-lg); border: 1px solid var(--border); position: relative;">
+               <img
+                src="generateapp.png"
+                alt="Генератор накладних — інтерфейс застосунку"
+                style="width: 100%; height: auto; border-radius: var(--radius-sm); border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: block;"
+              />
+              <div style="text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; font-family: var(--font-mono);">
+                invoice_app.py — головний інтерфейс
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="gallery-block">
+        <p class="section-label reveal">Скріншоти</p>
+        <h2 class="section-title reveal">Як виглядає результат</h2>
+        <div class="gallery-grid">
+          <div
+            class="gallery-item reveal"
+            data-img="folder.png"
+          >
+            <img
+              src="folder.png"
+              alt="Папка з накладними"
+              referrerpolicy="no-referrer"
+            />
+            <div class="gallery-caption">
+              // папка з 9 згенерованими накладними
+            </div>
+          </div>
+          <div
+            class="gallery-item reveal"
+            data-img="exel.png"
+          >
+            <img
+              src="exel.png"
+              alt="Готова накладна в Excel"
+              referrerpolicy="no-referrer"
+            />
+            <div class="gallery-caption">
+              // готова накладна — Іванців_17.04.2026.xlsx
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div class="how-block">
+        <p class="section-label reveal">Як це працює</p>
+        <h2 class="section-title reveal">Три кроки до результату</h2>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Завантажуєш зведений файл</div>
+              <p class="step-desc">
+                Обираєш Excel-файл з продажами за день. Застосунок автоматично
+                зчитує дату з імені файлу і знаходить усіх клієнтів у стовпцях P
+                і Q.
+              </p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Натискаєш одну кнопку</div>
+              <p class="step-desc">
+                Застосунок проходить по всіх клієнтах, формує індивідуальну
+                накладну для кожного з правильними формулами, форматом і
+                підписами. Прогрес-бар показує статус.
+              </p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">Отримуєш папку з накладними</div>
+              <p class="step-desc">
+                У вказаній папці з'являється директорія «Накладні_ДД.ММ.РРРР» з
+                окремим .xlsx файлом для кожного клієнта. Готово до друку або
+                надсилання.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CODE SNIPPET -->
+      <div class="code-block reveal">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <div class="code-file">invoice_app.py — фрагмент логіки</div>
+        </div>
+        <div class="code-body">
+          <pre><code><span class="kw">def</span> <span class="cl">generate_invoices</span>(input_file, output_dir, ...):
+    <span class="cm"># 1. Зчитуємо клієнтів зі стовпців P та Q</span>
+    clients = {}
+    <span class="kw">for</span> row <span class="kw">in</span> ws.iter_rows(min_col=<span class="nm">16</span>, max_col=<span class="nm">17</span>):
+        clients[<span class="cl">int</span>(nc.value)] = nm.value.strip()
+
+    <span class="cm"># 2. Для кожного клієнта — окрема накладна</span>
+    <span class="kw">for</span> client_num, client_name <span class="kw">in</span> clients.items():
+        wb = <span class="cl">Workbook</span>()
+        <span class="cm"># ...форматування, формули, підписи...</span>
+        filename = <span class="st">f"{client_name}_{date_str}.xlsx"</span>
+        wb.save(os.path.join(output_dir, filename))
+        log(<span class="st">f"✓  {filename}"</span>, <span class="st">"ok"</span>)
+
+<span class="cm"># Формат валюти для ціни та суми</span>
+cell.number_format = <span class="st">'#,##0.00'</span></code></pre>
+        </div>
+      </div>
+
+      <!-- WORKFLOW -->
+      <div class="how-block" style="margin-top: 100px;">
+        <p class="section-label reveal">Процес співпраці</p>
+        <h2 class="section-title reveal">Етапи роботи над проектом</h2>
+        <div class="steps">
+          <div class="step reveal">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Аналіз та збір вимог</div>
+              <p class="step-desc">
+                Детальне обговорення задачі, аналіз структури вхідних файлів Excel, визначення правил обробки та побажань до формату кінцевих накладних.
+              </p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Розробка логіки та UX</div>
+              <p class="step-desc">
+                Написання скрипту обробки даних (Python, openpyxl), тестування на реальних даних клієнта, та створення простого, зрозумілого графічного інтерфейсу (CustomTkinter).
+              </p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">Впровадження та підтримка</div>
+              <p class="step-desc">
+                Передача готового виконуваного файлу (.exe), навчання команди, виправлення можливих багів та адаптація під нові умови чи зміни у файлах.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-block">
+        <div style="font-size: 0.65rem; text-transform: uppercase; color: var(--accent); letter-spacing: 0.16em; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;" class="reveal">
+          <div style="width: 24px; height: 1px; background: var(--accent);"></div>FAQ
+        </div>
+        <h2 class="section-title reveal" style="margin-bottom: 40px;">Часті запитання</h2>
+        
+        <details class="faq-details reveal">
+          <summary class="faq-summary">
+            Чи обов'язковий інтернет для роботи застосунку?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            <p>Ні. Застосунок працює повністю офлайн і обробляє документи виключно локально на вашому комп'ютері. Це гарантує швидкість і повну безпеку даних.</p>
+          </div>
+        </details>
+        
+        <details class="faq-details reveal">
+          <summary class="faq-summary">
+            Чи безпечно передавати вам доступ до наших даних?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            <p>Абсолютно. Я працюю за принципом повної приватності. Для тестування мені достатньо одного знеособленого макета накладної, реальні дані ваших клієнтів я не збираю і не переглядаю.</p>
+          </div>
+        </details>
+
+        <details class="faq-details reveal">
+          <summary class="faq-summary">
+            Що якщо зміниться структура моїх Excel-файлів?
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            <p>Ви завжди можете звернутися до мене, і я оперативно внесу зміни у логіку програми. Оскільки код написаний сучасно і модульно, така підтримка займає мінімум часу та ресурсів.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-block reveal">
+        <h3>Потрібна схожа автоматизація?</h3>
+        <p>
+          Розкажіть про свою задачу — підберу оптимальне рішення для вашого
+          бізнесу.
+        </p>
+        <a href="index.html#contact" class="btn-primary">Написати →</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-logo">Lev<span>ik</span></div>
+      <p>© 2025 Levik. Зроблено у Львові 🇺🇦</p>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Reveal on scroll
+        const revealEls = document.querySelectorAll(".reveal");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add("visible"), 60);
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.08 },
+        );
+        revealEls.forEach((el) => observer.observe(el));
+
+        // Navbar scroll
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () =>
+          navbar.classList.toggle("scrolled", window.scrollY > 20),
+        );
+
+        // Lightbox
+        const lightbox = document.getElementById("lightbox");
+        const lbImg = document.getElementById("lb-img");
+        const lbClose = document.getElementById("lb-close");
+
+        document.querySelectorAll(".gallery-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            lbImg.src = item.dataset.img;
+            lightbox.classList.add("active");
+          });
+        });
+        lbClose.addEventListener("click", () =>
+          lightbox.classList.remove("active"),
+        );
+        lightbox.addEventListener("click", (e) => {
+          if (e.target === lightbox) lightbox.classList.remove("active");
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") lightbox.classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
