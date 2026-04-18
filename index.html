@@ -204,13 +204,15 @@
     ============================================= */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: all var(--t) var(--ease); position: relative; display: flex; flex-direction: column; }
-    .card:hover { border-color: #313148; background: var(--surface-2); transform: translateY(-5px); }
+    .card:hover { border-color: #313148; background: var(--surface-2); transform: translateY(-5px); cursor: pointer; }
     .card-number { position: absolute; top: 24px; right: 24px; font-family: var(--font-display); font-size: 0.6rem; color: var(--text-dim); }
     .card-icon { width: 48px; height: 48px; background: rgba(108,124,255,0.07); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
     .card-title { font-family: var(--font-display); font-size: 0.9rem; margin-bottom: 14px; }
     .card-desc { font-size: 0.84rem; color: var(--text-muted); margin-bottom: 20px; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 16px; margin-top: auto; }
     .card-tag { padding: 4px 10px; border-radius: 100px; background: rgba(108,124,255,0.07); font-size: 0.65rem; color: var(--accent); }
+    .card-arrow { font-size: 0.9rem; color: var(--text-dim); transition: transform var(--t), color var(--t); }
+    .card:hover .card-arrow { color: #fff; transform: translateX(4px); }
 
     /* =============================================
        ABOUT
@@ -368,8 +370,8 @@
           <h1 class="hero-name">Привіт,<br>я <span class="outline">Levik</span></h1>
           <p class="hero-tagline">IT-послуги для малого бізнесу —<br><strong>швидко, чесно і без зайвого.</strong></p>
           <div class="hero-cta">
-            <a href="#contact" class="btn-primary">Обговорити проєкт</a>
-            <a href="#services" class="btn-ghost">Що я роблю</a>
+            <a href="#contact" class="btn-primary">Обговорити проєкт <span>↓</span></a>
+            <a href="#services" class="btn-ghost">Що я роблю <span>→</span></a>
           </div>
         </div>
         <div class="hero-right reveal">
@@ -407,34 +409,34 @@ levik.solve_problem(your_business)</code></pre>
         <h2 class="section-title reveal">Що я можу зробити<br>для тебе</h2>
       </div>
       <div class="services-grid">
-        <div class="card reveal">
+        <a href="#contact" class="card reveal">
           <span class="card-number">01</span>
           <div class="card-icon">🐍</div>
           <div class="card-title">Python-скрипти</div>
           <p class="card-desc">Автоматизую рутинні задачі: обробка файлів, розсилки, інтеграції з API.</p>
-          <div class="card-footer"><span class="card-tag">Автоматизація</span></div>
-        </div>
-        <div class="card reveal">
+          <div class="card-footer"><span class="card-tag">Автоматизація</span><span class="card-arrow">→</span></div>
+        </a>
+        <a href="project-invoice.html" class="card reveal">
           <span class="card-number">02</span>
           <div class="card-icon">📊</div>
           <div class="card-title">Автоматизація Excel</div>
           <p class="card-desc">Макроси, формули. Перетворю Excel на інструмент, що працює сам.</p>
-          <div class="card-footer"><span class="card-tag">Excel / VBA</span></div>
-        </div>
-        <div class="card reveal">
+          <div class="card-footer"><span class="card-tag">Excel / VBA</span><span class="card-arrow">→</span></div>
+        </a>
+        <a href="case-databases.html" class="card reveal">
           <span class="card-number">03</span>
-          <div class="card-icon">🔎</div>
-          <div class="card-title">Парсери даних</div>
-          <p class="card-desc">Збираю інформацію з сайтів: ціни, контакти. Результат — зручний Excel.</p>
-          <div class="card-footer"><span class="card-tag">Scraping</span></div>
-        </div>
-        <div class="card reveal">
+          <div class="card-icon">🗄️</div>
+          <div class="card-title">Бази даних</div>
+          <p class="card-desc">Проєктування, міграція та оптимізація. Зберігаю дані надійно та зручно.</p>
+          <div class="card-footer"><span class="card-tag">SQL / NoSQL</span><span class="card-arrow">→</span></div>
+        </a>
+        <a href="#contact" class="card reveal">
           <span class="card-number">04</span>
           <div class="card-icon">🤖</div>
           <div class="card-title">Telegram-боти</div>
           <p class="card-desc">Боти для бізнесу: прийом замовлень, FAQ, сповіщення. Швидко і недорого.</p>
-          <div class="card-footer"><span class="card-tag">API / Bots</span></div>
-        </div>
+          <div class="card-footer"><span class="card-tag">API / Bots</span><span class="card-arrow">→</span></div>
+        </a>
       </div>
     </div>
   </section>
